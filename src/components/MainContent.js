@@ -1,21 +1,23 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Row, Col, Modal, Button, Form, Input, } from 'antd';
 import "antd/dist/antd.css";
 import MainContentList from './MainContentList';
 import MainOption from './MainOption'
 import { v4 as uuidv4 } from 'uuid';
 import { useStore, actions } from '../store'
-import dist from '@testing-library/user-event';
 
 function MainContent(props) {
     const [listForms, setListForms] = useState([])
+
     const [activeForm, setActiveForm] = useState()
+
     const [visible, setVisible] = useState(false);
+
     const [state, dispatch] = useStore()
 
     const { activeOption, textNum, listOptions } = props
 
-    // ------------All-function-----------------------------------------
+    // ------------Function-----------------------------------------
 
     const handleClickFormItem = (item) => {
         dispatch(actions.setClicked(true))
@@ -85,7 +87,7 @@ function MainContent(props) {
         dispatch(actions.setProcess(1))
     };
 
-    // ------------function--------------------------------------------
+    // ------------End_Function--------------------------------------------
 
     return (
         <div>

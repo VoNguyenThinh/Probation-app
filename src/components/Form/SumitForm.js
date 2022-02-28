@@ -32,26 +32,36 @@ function SumitForm(props) {
 
     const dataTabTitle = _.uniqBy(data, 'formId')//============||||
 
+    const checkInitData = () => {
+        if (dataTabTitle.length === 1) {
+            return true
+        } else {
+            return false
+        }
+    }
 
     const [precess, setProcess] = useState(0)
 
-    const [visible, setVisible] = useState(true)
+    const [visible, setVisible] = useState(checkInitData)
 
     const [current, setCurrent] = useState(1)
 
     const [form] = Form.useForm()
 
-
-    // =================================================Config data ==================================
+    // ===================================Function====================================================
     const filterData = (formId) => {
         return _.filter(data, { formId: formId })
     }
-    // =================================================Config data ==================================
 
-    // ===================================Function====================================================
     function callback(key) {
         setProcess(key)
         setCurrent(parseInt(key) + 1)
+
+        if (parseInt(key) === dataTabTitle.length - 1) {
+            setVisible(true)
+        } else {
+            setVisible(false)
+        }
     }
 
     const onFinish = (value) => {
@@ -60,15 +70,15 @@ function SumitForm(props) {
 
     const pageChage = (page) => {
         setProcess(page - 1)
+        setVisible(true)
         setCurrent(page)
-
-        if (page === dataTabTitle.length || dataTabTitle.length === 1) {
+        if (page === dataTabTitle.length) {
             setVisible(true)
         } else {
             setVisible(false)
         }
     }
-    // ===================================Function====================================================
+    // ===================================End_Function====================================================
 
     const InputConfig = (props) => {
         const { label, name, required, errormessage } = props
@@ -151,10 +161,15 @@ function SumitForm(props) {
                         <Space>
                             <Pagination hideOnSinglePage={_.isEmpty(data) ? true : false} defaultCurrent={1} current={current} pageSize={1} onChange={pageChage} total={dataTabTitle.length} />
                             <Form.Item >
-                                {visible && <Button type='primary' htmlType='submit' style={{ width: '10em', top: '0.85em' }}>Submit</Button>}
+                                {visible && <Button
+                                    type='primary'
+                                    htmlType='submit'
+                                    style={{ width: '10em', top: '0.85em' }}
+                                >
+                                    Submit
+                                </Button>}
                             </Form.Item>
                         </Space>
-
                     </Form>
                 </Col>
                 <Col span={8}>

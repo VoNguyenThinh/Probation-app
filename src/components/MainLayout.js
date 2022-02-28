@@ -12,18 +12,20 @@ const { Header, Footer, Sider, Content } = Layout;
 
 function MainLayout(props) {
     const [listOptions, setListOptions] = useState([])
+
     const [state, dispatch] = useStore()
 
     const data = [
         'TEXT',
         'SELECT'
     ];
+
     const option = (op) => {
         let ops = _.indexOf(data, op);
         return `${ops}`
     }
-    return (
 
+    return (
         <div className='main'>
             <Layout>
                 <Sider style={{ color: 'white', listStyle: "none" }}>

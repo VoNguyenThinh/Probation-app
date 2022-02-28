@@ -5,22 +5,18 @@ import { Button, Modal, Form, Input, Radio, Select, Divider, Typography, Space, 
 import _ from 'lodash'
 import '../App.css'
 import { useStore, actions } from '../store';
+
 // ======================Define========================================================
 const { Option } = Select;
-const { Step } = Steps;
 
-// let activeOption = localStorage.getItem('activeOption');
+const { Step } = Steps;
 
 const typeOfProperty = {
     'TEXT': ['type', 'label', 'name', 'erorr', 'required'],
     'SELECT': ['type', 'label', 'name', 'erorr', 'select']
 }
 
-// ======================Define=======================================================
-
-// ====================================================================================
-
-const Label = (props) => {
+const Label = () => {
     return (
         <Form.Item
             name="label"
@@ -37,6 +33,7 @@ const Label = (props) => {
         </Form.Item>
     )
 }
+
 const Name = () => {
     return (
         <Form.Item
@@ -54,7 +51,8 @@ const Name = () => {
         </Form.Item>
     )
 }
-const Required = (props) => {
+
+const Required = () => {
     {
         return (
             <Form.Item
@@ -75,6 +73,7 @@ const Required = (props) => {
         )
     }
 }
+
 const Type = (props) => {
     const { active, form, onChanged } = props
     const [state, dispatch] = useStore()
@@ -107,7 +106,8 @@ const Type = (props) => {
 
     )
 }
-const ErrorMessage = (props) => {
+
+const ErrorMessage = () => {
 
     return (
         <Form.Item
@@ -125,7 +125,8 @@ const ErrorMessage = (props) => {
     )
 
 }
-const Selected = (props) => {
+
+const Selected = () => {
     const [items, setItems] = useState([{ name: "Apple", value: "Apple" }, { name: "Banana", value: "Banana" }]);
     const [name, setName] = useState('');
     const [value, setValue] = useState('');
@@ -138,8 +139,8 @@ const Selected = (props) => {
     };
 
     const addItem = e => {
-        e.preventDefault();
 
+        e.preventDefault();
         setItems([...items, { name: name, value: value } || { name: `New item ${index++}}`, value: `New item ${index++}}` }]);
         setName('');
         setValue('');
@@ -187,6 +188,7 @@ const Selected = (props) => {
 
     )
 }
+
 const Save = (props) => {
     const { submitData, dispatch } = props
 
@@ -198,14 +200,13 @@ const Save = (props) => {
                 })
                 dispatch(actions.setProcess(4))
                 dispatch(actions.setAllData(newSubmit))
-                console.log(newSubmit)
+                // console.log(newSubmit)
             }} block>
                 SAVE
             </Button>
         </Col>
     )
 }
-// ====================================================================================
 
 const typeFormItem = {
     'label': props => <Label {...props} />,
@@ -215,6 +216,8 @@ const typeFormItem = {
     'erorr': props => <ErrorMessage {...props} />,
     'select': props => <Selected {...props} />,
 }
+
+// ======================End-Define=======================================================
 
 const CollectionCreateForm = ({ onCreate, onCancel, submitData, collectionCreateForm, setCollectionCreateForm }) => {
 
@@ -266,6 +269,7 @@ const CollectionCreateForm = ({ onCreate, onCancel, submitData, collectionCreate
         </Modal >
     )
 };
+
 const MainOption = (props) => {
     const [collectionCreateForm, setCollectionCreateForm] = useState(null)
     const [submitData, setSubmitData] = useState([])
@@ -274,13 +278,10 @@ const MainOption = (props) => {
     const [state, dispatch] = useStore()
     // ===============================================================================
     const activeFormId = state.activeFormId
-
     let newArray = [...listOptions]
     const newListOptions = _.filter(newArray, { formId: activeFormId })
 
     // ===============================================================================
-
-
 
     const onCreate = (values) => {
         let newArray = _.cloneDeep(submitData)
@@ -342,4 +343,5 @@ const MainOption = (props) => {
     )
 
 }
+
 export default MainOption;

@@ -15,10 +15,7 @@ function MainLayout(props) {
 
     const [state, dispatch] = useStore()
 
-    const data = [
-        'TEXT',
-        'SELECT'
-    ];
+    const data = Object.keys(state.typeOfProperty)
 
     const option = (op) => {
         let ops = _.indexOf(data, op);
@@ -30,9 +27,9 @@ function MainLayout(props) {
             <Layout>
                 <Sider style={{ color: 'white', listStyle: "none" }}>
                     <Menu theme="dark" selectedKeys={[option(state.activeOption)]}>
-                        {data.map((item, index) => {
+                        {_.map(data, (item, index) => {
                             return (
-                                <Menu.Item className={''}
+                                <Menu.Item className='options'
                                     onClick={() => {
                                         if (state.clicked) {
                                             const formId = state.activeFormId;

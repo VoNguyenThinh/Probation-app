@@ -1,13 +1,13 @@
-import { SET_CLICKED } from './constants'
-import { ADD_LIST_FORMS } from './constants'
-import { SET_ACTIVE_FORM_ID } from './constants'
-import { ADD_LIST_OPTION } from './constants'
-import { SET_ACTIVE_BTN } from './constants'
-import { SET_ACTIVE_OPTION } from './constants'
-import { SET_PROCESS } from './constants'
-import { SET_TYPE } from './constants'
-import { SET_FORM_TITLE } from './constants'
-import { SET_ALL_DATA } from './constants'
+import { SET_CLICKED } from "./constants";
+import { ADD_LIST_FORMS } from "./constants";
+import { SET_ACTIVE_FORM_ID } from "./constants";
+import { ADD_LIST_OPTION } from "./constants";
+import { SET_ACTIVE_BTN } from "./constants";
+import { SET_ACTIVE_OPTION } from "./constants";
+import { SET_PROCESS } from "./constants";
+import { SET_TYPE } from "./constants";
+import { SET_FORM_TITLE } from "./constants";
+import { SET_ALL_DATA } from "./constants";
 
 
 export const setClicked = payload => ({

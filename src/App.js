@@ -22,14 +22,14 @@ function App() {
             </Link>
           </li>
           <li>
-            <Link to='/all-form'>
+            <Link to='/submit-form'>
               <Button type='link'>All Form</Button>
             </Link>
           </li>
         </ul>
 
         <Switch>
-          <Route exact path="/all-form">
+          <Route exact path="/submit-form">
             <SumitForm />
           </Route>
 

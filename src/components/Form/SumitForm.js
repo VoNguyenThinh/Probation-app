@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Tabs, Row, Col, Button, Space, Form, Input, Select, Pagination } from "antd"
+import { Tabs, Row, Col, Button, Space, Form, Input, Select, Pagination, Radio, DatePicker } from "antd"
 import { useStore, actions } from '../../store'
 import _ from 'lodash'
 
 const { TabPane } = Tabs;
 const { Option } = Select;
+const { RangePicker } = DatePicker;
 
 function SumitForm(props) {
     const testData = [
@@ -29,6 +30,8 @@ function SumitForm(props) {
     const [state, dispatch] = useStore()
 
     const data = state.allData
+
+    // console.log(data)
 
     const dataTabTitle = _.uniqBy(data, 'formId')//============||||
 
@@ -64,8 +67,12 @@ function SumitForm(props) {
         }
     }
 
-    const onFinish = (value) => {
-        console.log(value)
+    const onFinish = (fieldsValue) => {
+        // const values = {
+        //     ...fieldsValue,
+        //     'date-picker': fieldsValue['date-picker'].format('YYYY-MM-DD'),
+        // };
+        console.log(fieldsValue)
     }
 
     const pageChage = (page) => {
@@ -122,9 +129,63 @@ function SumitForm(props) {
         )
     }
 
+    const RadioConfig = (props) => {
+        const { selected, label, name, required, errormessage, } = props
+        const checkReq = required === 'yes' ? true : false
+
+        let selectedArray = []
+        _.map(selected, (item) => {
+            selectedArray.push(JSON.parse(item))
+        })
+
+        return (
+            <Form.Item
+                rules={[{ required: checkReq, message: `${errormessage}` }]}
+                name={name}
+                label={label}
+                wrapperCol={{ offset: 0, span: 10 }}
+                labelCol={{ offset: 0, span: 2 }}
+            >
+                <Radio.Group>
+                    {
+                        _.map(selectedArray, (item, index) => {
+                            return (
+                                <Radio key={index} value={item.value}>{item.name}</Radio>
+                            )
+                        })
+                    }
+                </Radio.Group>
+            </Form.Item>
+        )
+    }
+
+    const DatePickerConfig = (props) => {
+        const { label, name, required, errormessage, } = props
+        const checkReq = required === 'yes' ? true : false
+
+        return (
+            <Form.Item
+                name={name}
+                label={label}
+                style={{ marginLeft: '30px' }}
+                rules={[
+                    {
+                        type: 'object',
+                        required: checkReq,
+                        message: `${errormessage}`,
+                    },
+                ]}
+            >
+                <DatePicker />
+            </Form.Item>
+        )
+    }
+
     const typeOfProperty = {
         'TEXT': props => <InputConfig {...props} />,
         'SELECT': props => <SelectConfig {...props} />,
+        'RADIO': props => <RadioConfig {...props} />,
+        'DATE PICKER': props => <DatePickerConfig {...props} />,
     }
 
     return (

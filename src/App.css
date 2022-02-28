@@ -1,6 +1,7 @@
 .active{
   background: 'blue';
 }
-/* .click{
-  pointer-events: none;
+/* .options{
+  border-right: 1px red solid;
+  width: 180px;
 } */

@@ -21,12 +21,12 @@ export const CollectionCreateForm = ({
 
     const { type } = collectionCreateForm
 
-    const initialValues = _.find(submitData, ['btnid', collectionCreateForm.id])
 
     const onChanged = (value) => {
         setCollectionCreateForm({ ...collectionCreateForm, type: value })
         dispatch(actions.setActiveOption(value))
     }
+    const initialValues = _.find(submitData, ['btnid', collectionCreateForm.id])
 
     const typeFormItem = {
         'label': props => <Label {...props} />,
@@ -37,7 +37,6 @@ export const CollectionCreateForm = ({
         'select-multiple': props => <SelectMultiple {...props} />
     }
 
-    // console.log(initialValues)
 
     return (
         <Modal

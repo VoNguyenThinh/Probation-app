@@ -56,11 +56,20 @@ const MainOption = (props) => {
                 }
             )
             setSubmitData(newArray);
+            // console.log('lan dau', newArray)
         } else {
+            _.remove(newArray, { btnid: collectionCreateForm.id });
+            newArray.push(
+                {
+                    btnid: collectionCreateForm.id,
+                    formId: activeFormId,
+                    formTitle: collectionCreateForm.formTitle,
+                    data: values,
+                }
+            )
+            setSubmitData(newArray)
 
-            // console.log('lan sau')
-            // console.log('lan sau')
-
+            console.log('lan sau', newArray)
         }
 
 

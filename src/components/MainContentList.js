@@ -1,7 +1,9 @@
 import React from 'react';
 import { List } from 'antd';
 import '../Assets/style.css'
+
 function MainContentList(props) {
+
     let { data, handleClick, activeId } = props
 
     return (

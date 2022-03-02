@@ -8,7 +8,6 @@ import { v4 as uuidv4 } from 'uuid';
 // ======================================================================Config from REDUX =====================================================================
 import { useDispatch } from 'react-redux'
 import * as rxActions from '../store/ReduxStore/Slice/MainSlice'
-
 // ======================================================================Config from REDUX =====================================================================
 
 function MainContent(props) {
@@ -29,11 +28,13 @@ function MainContent(props) {
     const handleClickFormItem = (item) => {
 
         setActiveForm(item.id)
+
         rxDispatch(rxActions.setFormId(item.id))
 
-
         rxDispatch(rxActions.setFormTile(item.title))
+
         rxDispatch(rxActions.setClicked(true))
+
     }
 
 
@@ -119,7 +120,6 @@ function MainContent(props) {
 
                 <Col style={{ padding: '25px' }} span={16}>
                     <MainOption listOptions={listOptions} />
-                    {/* <CreateOption /> */}
                 </Col>
 
             </Row>

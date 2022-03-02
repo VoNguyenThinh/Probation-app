@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { Button, Row, Col, Steps } from 'antd';
 import _ from 'lodash'
 import '../App.css'
-import { Save } from './constants/FormItem';
 
+import { Save } from './constants/FormItem';
 import { CollectionCreateForm } from './constants/CollectionCreateForm'
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,9 +11,6 @@ import { selectMainSlice } from '../store/ReduxStore/Slice/MainSlice';
 
 // ======================Define========================================================
 
-const { Step } = Steps;
-
-// ======================End-Define=======================================================
 const MainOption = (props) => {
 
     const rxState = useSelector(selectMainSlice)
@@ -24,8 +21,6 @@ const MainOption = (props) => {
 
     let newArray = [...listOptions];
 
-    // const [state, dispatch] = useStore()
-
     const activeFormId = rxState.activeFormId
 
     const newListOptions = _.filter(newArray, { formId: activeFormId })
@@ -35,7 +30,6 @@ const MainOption = (props) => {
     const [submitData, setSubmitData] = useState([])
 
     const [btnTitle, setBtnTitle] = useState(null)
-
 
     const onCreate = (values) => {
 
@@ -70,6 +64,7 @@ const MainOption = (props) => {
     const onChangeBtn = (value, btnid) => {
 
         let index = _.findIndex(newListOptions, { id: btnid })
+
         newListOptions[index].type = value
 
     }
@@ -110,8 +105,8 @@ const MainOption = (props) => {
                 submitData={submitData}
                 typeOfProperty={rxState.typeOfProperty}
                 onCreate={onCreate}
-                onCancel={() => {
 
+                onCancel={() => {
                     setCollectionCreateForm(null);
                 }}
             />}

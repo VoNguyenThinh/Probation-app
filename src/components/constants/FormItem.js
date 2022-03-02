@@ -4,7 +4,6 @@ import { Button, Form, Input, Radio, Select, Divider, Typography, Space, Col, Da
 import _ from 'lodash'
 import * as rxActions from '../../store/ReduxStore/Slice/MainSlice'
 
-
 const { Option } = Select;
 
 export const Label = (props) => {

@@ -12,13 +12,12 @@ export const CollectionCreateForm = ({
     collectionCreateForm,
     onChangeBtn,
     typeOfProperty,
-    state,
 
     rxState,
     rxDispatch,
     addInitSelectData,
-}) => {
 
+}) => {
 
     const [form] = Form.useForm();
 
@@ -28,8 +27,6 @@ export const CollectionCreateForm = ({
 
         return initialValues?.data
     });
-
-
 
     const onChanged = (value) => {
 
@@ -66,7 +63,6 @@ export const CollectionCreateForm = ({
             getContainer={false}
             cancelText="Cancel"
             onCancel={onCancel}
-
             onOk={() => {
                 form
                     .validateFields()
@@ -90,12 +86,10 @@ export const CollectionCreateForm = ({
                 {_.map(typeOfProperty[initialValues?.type ?? collectionCreateForm.type], (items) => {
                     return (
                         typeFormItem[items]({
-
                             data: submitData,
                             form: form,
                             initialRequired: initialValues?.required,
                             typeOfProperty: typeOfProperty,
-                            state: state,
                             rxState: rxState,
                             rxDispatch: rxDispatch,
                             addInitSelectData: addInitSelectData,

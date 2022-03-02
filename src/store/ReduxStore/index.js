@@ -3,9 +3,11 @@ import mainReducer from "./Slice/MainSlice";
 
 
 const store = configureStore({
+
     reducer: {
-        mainSlice: mainReducer
+        mainSlice: mainReducer,
     }
+
 })
 
 

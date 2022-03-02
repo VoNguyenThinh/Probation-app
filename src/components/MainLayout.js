@@ -21,11 +21,10 @@ const { Header, Footer, Sider, Content } = Layout;
 function MainLayout(props) {
 
     const rxState = useSelector(selectMainSlice) /*============================REDUX==================================*/
-    const rxDispatch = useDispatch() /*============================REDUX==================================*/
+
+    const rxDispatch = useDispatch() /*========================================REDUX==================================*/
 
     const [listOptions, setListOptions] = useState([])
-
-    // const [state, dispatch] = useStore()
 
     const data = Object.keys(rxState.typeOfProperty)
 
@@ -55,7 +54,6 @@ function MainLayout(props) {
                                                     formTitle: formTitle
                                                 }
                                             )
-                                            console.log(newArray)
                                             setListOptions(newArray)
                                             rxDispatch(rxActions.setActiveOption(item))
                                         }

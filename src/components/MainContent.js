@@ -4,7 +4,6 @@ import "antd/dist/antd.css";
 import MainContentList from './MainContentList';
 import MainOption from './MainOption'
 import { v4 as uuidv4 } from 'uuid';
-import { useStore, actions } from '../store'
 
 // ======================================================================Config from REDUX =====================================================================
 import { useDispatch } from 'react-redux'
@@ -17,15 +16,11 @@ function MainContent(props) {
     const rxDispatch = useDispatch()
     /*REDEUX AREA */
 
-
-
     const [listForms, setListForms] = useState([])
 
     const [activeForm, setActiveForm] = useState()
 
     const [visible, setVisible] = useState(false);
-
-    // const [state, dispatch] = useStore()
 
     const { listOptions } = props
 

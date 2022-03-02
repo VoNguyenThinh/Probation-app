@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Button, Row, Col, Steps } from 'antd';
 import _ from 'lodash'
 import '../App.css'
-import { useStore, actions } from '../store';
 import { Save } from '../constans/FormItem';
 import { CollectionCreateForm } from '../constans/CollectionCreateForm'
 
@@ -97,13 +96,11 @@ const MainOption = (props) => {
                         </Col>
                     )
                 })}
-                {submitData.length !== 0 && <Save submitData={submitData} rxDispatch={rxDispatch} actions={actions} />}
+                {submitData.length !== 0 && <Save submitData={submitData} rxDispatch={rxDispatch} />}
             </Row>
 
             {!_.isEmpty(collectionCreateForm) && <CollectionCreateForm
                 collectionCreateForm={collectionCreateForm}
-
-                actions={actions}
 
                 rxState={rxState}
                 rxDispatch={rxDispatch}

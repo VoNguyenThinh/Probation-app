@@ -3,28 +3,16 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { StoreProvider } from './store'
 // ============================================================================ConfigRedux===================================================================
-
 import { Provider } from 'react-redux'
 import { store } from './store/ReduxStore'
-
-
 
 // ============================================================================ConfigRedux===================================================================
 
 ReactDOM.render(
-  // <StoreProvider>
-
-
   <Provider store={store}>
     <App />
   </Provider>,
-
-
-
-  // </StoreProvider>,
-
   document.getElementById('root')
 );
 

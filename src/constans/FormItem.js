@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
 import { Button, Form, Input, Radio, Select, Divider, Typography, Space, Col, DatePicker } from 'antd';
 import _ from 'lodash'
+import * as rxActions from '../store/ReduxStore/Slice/MainSlice'
+
 
 const { Option } = Select;
 
@@ -131,7 +133,8 @@ export const Type = (props) => {
 }
 
 export const Save = (props) => {
-    const { submitData, dispatch, actions } = props
+
+    const { submitData, rxDispatch } = props
 
     return (
         <Col span={4}>
@@ -139,8 +142,8 @@ export const Save = (props) => {
                 let newSubmit = _.uniqBy(submitData, (e) => {
                     return e.btnid
                 })
-                dispatch(actions.setProcess(4))
-                dispatch(actions.setAllData(newSubmit))
+                // dispatch(actions.setProcess(4))
+                rxDispatch(rxActions.setAllData(newSubmit))
                 console.log(newSubmit)
             }} block>
                 SAVE
@@ -150,18 +153,16 @@ export const Save = (props) => {
 }
 
 export const Selected = (props) => {
-    const { state, dispatch, actions } = props
 
-    const items = state.initialSelectData
+    const { rxState, rxDispatch, } = props
+
+    const items = rxState.initialSelectData
 
     const [selectState, setSelectState] = useState({ name: '', value: '' })
 
     const onChange = (event) => {
 
         const { name, value } = event.target
-
-        console.log(event.target)
-
         setSelectState(currentState => ({ ...currentState, [name]: value })) //   name: value => name: 1  , [name]: 1  => thanh: 1
     }
 
@@ -169,7 +170,7 @@ export const Selected = (props) => {
 
         e.preventDefault();
 
-        dispatch(actions.addInitSelectData(selectState))
+        rxDispatch(rxActions.addInitSelectData(selectState))
 
         setSelectState({ name: '', value: '' });
     };
@@ -215,9 +216,9 @@ export const Selected = (props) => {
 
 export const SelectMultiple = (props) => {
 
-    const { state, dispatch, actions } = props
+    const { rxState, rxDispatch } = props
 
-    const items = state.initialSelectData
+    const items = rxState.initialSelectData
 
     const [name, setName] = useState('');
     const [value, setValue] = useState('');
@@ -234,7 +235,7 @@ export const SelectMultiple = (props) => {
         if (name == '' || value == '') {
             return
         }
-        dispatch(actions.addInitSelectData({ name: name, value: value }))
+        rxDispatch(rxActions.addInitSelectData({ name: name, value: value }))
         setName('');
         setValue('');
 

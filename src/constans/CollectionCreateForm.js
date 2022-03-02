@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Modal, Form } from 'antd';
 import _ from 'lodash'
-
 import { Label, Name, Required, Selected, SelectMultiple, Type, } from '../constans/FormItem';
 
+import * as rxActions from '../store/ReduxStore/Slice/MainSlice'
 
 export const CollectionCreateForm = ({
     onCreate,
@@ -12,13 +12,15 @@ export const CollectionCreateForm = ({
     collectionCreateForm,
     onChangeBtn,
     typeOfProperty,
-    initialSelectData,
-
     state,
     dispatch,
-    actions
+    actions,
 
+    rxState,
+    rxDispatch,
+    addInitSelectData,
 }) => {
+
 
     const [form] = Form.useForm();
 
@@ -28,6 +30,8 @@ export const CollectionCreateForm = ({
 
         return initialValues?.data
     });
+
+
 
     const onChanged = (value) => {
 
@@ -44,7 +48,7 @@ export const CollectionCreateForm = ({
 
         onChangeBtn(value, collectionCreateForm.id)
 
-        dispatch(actions.setActiveOption(value))
+        rxDispatch(rxActions.setActiveOption(value))
 
     }
 
@@ -93,11 +97,12 @@ export const CollectionCreateForm = ({
                             form: form,
                             initialRequired: initialValues?.required,
                             typeOfProperty: typeOfProperty,
-                            initialSelectData: initialSelectData,
                             state: state,
                             dispatch: dispatch,
-                            actions: actions
-
+                            actions: actions,
+                            rxState: rxState,
+                            rxDispatch: rxDispatch,
+                            addInitSelectData: addInitSelectData,
                         })
                     )
                 })}

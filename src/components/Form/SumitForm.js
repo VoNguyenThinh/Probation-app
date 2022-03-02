@@ -1,37 +1,25 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState, } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Tabs, Row, Col, Button, Space, Form, Input, Select, Pagination, Radio, DatePicker } from "antd"
-import { useStore, actions } from '../../store'
 import _ from 'lodash'
 
 import { InputConfig, DatePickerConfig, RadioConfig, SelectConfig } from '../../constans/FormItem';
 
+import { selectMainSlice } from '../../store/ReduxStore/Slice/MainSlice';
+
 const { TabPane } = Tabs;
 
 function SumitForm(props) {
-    const testData = [
-        {
-            btnid: '95b57d08-fcb0-439e-9b40-58fe4176e0ae', formId: 'fd1b4a26-ed59-4b15-a5e2-545bc17f6007', formTitle: 'Form 1',
-            data: { type: 'TEXT', label: 'Input 1', name: 'Name 1', errormessage: 'Error 1', required: 'yes' }
-        },
-        {
-            btnid: '6fb4d98d-8a5c-4ee7-a7bf-7411bae78057', formId: 'fd1b4a26-ed59-4b15-a5e2-545bc17f6007', formTitle: 'Form 1',
-            data: { type: 'TEXT', label: 'Input 2', name: 'Name 2', errormessage: 'Error 2', required: 'no' }
-        },
-        {
-            btnid: '94dcb756-4b2c-4772-afba-0797c954200a', formId: '94ff205b-812c-4c21-b0a5-019dfb6a5cf7', formTitle: 'Form 2',
-            data: { type: 'SELECT', label: 'Select 1', name: 'sname 1', errormessage: 's-error 1', selected: '{"name":"Cam","value":"cam23"}' }
-        },
-        {
-            btnid: '7c3c1091-bed0-4d8a-b6eb-1fc6c813b01a', formId: '94ff205b-812c-4c21-b0a5-019dfb6a5cf7', formTitle: 'Form 2',
-            data: { type: 'SELECT', label: 'Select 2', name: 'sname 2', errormessage: 's-error 2', selected: '{"name":"Banana","value":"banana123"}' }
-        },
-    ]
 
-    const [state, dispatch] = useStore()
+    const rxState = useSelector(selectMainSlice) //==================================FROM REDUX=======================
 
-    const data = state.allData
+    const data = rxState.allData
 
-    const dataTabTitle = _.uniqBy(data, 'formId')//============||||
+    useEffect(() => { })
+
+    const dataTabTitle = _.uniqBy(data, 'formId')
+
+    const checkInitData = () => dataTabTitle.length === 1
 
     const [precess, setProcess] = useState(0)
 
@@ -42,8 +30,6 @@ function SumitForm(props) {
     const [form] = Form.useForm()
 
     // ===================================Function====================================================
-
-    const checkInitData = () => dataTabTitle.length === 1
 
     const filterData = (formId) => {
         return _.filter(data, { formId: formId })

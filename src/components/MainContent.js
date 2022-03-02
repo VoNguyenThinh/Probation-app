@@ -6,26 +6,41 @@ import MainOption from './MainOption'
 import { v4 as uuidv4 } from 'uuid';
 import { useStore, actions } from '../store'
 
+// ======================================================================Config from REDUX =====================================================================
+import { useDispatch } from 'react-redux'
+import * as rxActions from '../store/ReduxStore/Slice/MainSlice'
+
+// ======================================================================Config from REDUX =====================================================================
+
 function MainContent(props) {
+    /*REDEUX AREA */
+    const rxDispatch = useDispatch()
+    /*REDEUX AREA */
+
+
+
     const [listForms, setListForms] = useState([])
 
     const [activeForm, setActiveForm] = useState()
 
     const [visible, setVisible] = useState(false);
 
-    const [state, dispatch] = useStore()
+    // const [state, dispatch] = useStore()
 
-    const { activeOption, textNum, listOptions } = props
+    const { listOptions } = props
 
     // ------------Function-----------------------------------------
 
     const handleClickFormItem = (item) => {
-        dispatch(actions.setClicked(true))
 
         setActiveForm(item.id)
-        dispatch(actions.setFormId(item.id))
-        dispatch(actions.setFormTile(item.title))
+        rxDispatch(rxActions.setFormId(item.id))
+
+
+        rxDispatch(rxActions.setFormTile(item.title))
+        rxDispatch(rxActions.setClicked(true))
     }
+
 
     const CollectionCreateForm = ({ visible, onCreate, onCancel }) => {
         const [form] = Form.useForm();
@@ -84,7 +99,6 @@ function MainContent(props) {
             }
         )
         setListForms(newArray)
-        dispatch(actions.setProcess(1))
     };
 
     // ------------End_Function--------------------------------------------
@@ -109,7 +123,7 @@ function MainContent(props) {
                 </Col>
 
                 <Col style={{ padding: '25px' }} span={16}>
-                    <MainOption activeOption={activeOption} textNum={textNum} listOptions={listOptions} />
+                    <MainOption listOptions={listOptions} />
                     {/* <CreateOption /> */}
                 </Col>
 

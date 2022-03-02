@@ -6,25 +6,27 @@ import { useStore, actions } from '../store';
 import { Save } from '../constans/FormItem';
 import { CollectionCreateForm } from '../constans/CollectionCreateForm'
 
+import { useDispatch, useSelector } from 'react-redux';
+import { selectMainSlice } from '../store/ReduxStore/Slice/MainSlice';
+
 // ======================Define========================================================
 
 const { Step } = Steps;
 
-// const initialSelectData = [
-//     { name: "Apple", value: "apple" },
-//     { name: "Banana", value: "banana" }
-// ];
-
 // ======================End-Define=======================================================
 const MainOption = (props) => {
+
+    const rxState = useSelector(selectMainSlice)
+
+    const rxDispatch = useDispatch()
 
     const { listOptions } = props
 
     let newArray = [...listOptions];
 
-    const [state, dispatch] = useStore()
+    // const [state, dispatch] = useStore()
 
-    const activeFormId = state.activeFormId
+    const activeFormId = rxState.activeFormId
 
     const newListOptions = _.filter(newArray, { formId: activeFormId })
 
@@ -95,20 +97,20 @@ const MainOption = (props) => {
                         </Col>
                     )
                 })}
-                {submitData.length !== 0 && <Save submitData={submitData} dispatch={dispatch} actions={actions} />}
+                {submitData.length !== 0 && <Save submitData={submitData} rxDispatch={rxDispatch} actions={actions} />}
             </Row>
 
             {!_.isEmpty(collectionCreateForm) && <CollectionCreateForm
                 collectionCreateForm={collectionCreateForm}
 
-                state={state}
-                dispatch={dispatch}
                 actions={actions}
+
+                rxState={rxState}
+                rxDispatch={rxDispatch}
 
                 onChangeBtn={onChangeBtn}
                 submitData={submitData}
-                typeOfProperty={state.typeOfProperty}
-                // initialSelectData={initialSelectData}
+                typeOfProperty={rxState.typeOfProperty}
                 onCreate={onCreate}
                 onCancel={() => {
 

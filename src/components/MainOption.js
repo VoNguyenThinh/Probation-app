@@ -1,52 +1,45 @@
 import React, { useState } from 'react';
-
 import { Button, Row, Col, Steps } from 'antd';
-
 import _ from 'lodash'
-
 import '../App.css'
-
 import { useStore, actions } from '../store';
-
 import { Save } from '../constans/FormItem';
-
 import { CollectionCreateForm } from '../constans/CollectionCreateForm'
 
 // ======================Define========================================================
 
 const { Step } = Steps;
 
-const initialSelectData = [
-    { name: "Apple", value: "apple" },
-    { name: "Banana", value: "banana" }
-];
+// const initialSelectData = [
+//     { name: "Apple", value: "apple" },
+//     { name: "Banana", value: "banana" }
+// ];
 
 // ======================End-Define=======================================================
 const MainOption = (props) => {
 
     const { listOptions } = props
 
+    let newArray = [...listOptions];
+
+    const [state, dispatch] = useStore()
+
+    const activeFormId = state.activeFormId
+
+    const newListOptions = _.filter(newArray, { formId: activeFormId })
+
     const [collectionCreateForm, setCollectionCreateForm] = useState(null)
 
     const [submitData, setSubmitData] = useState([])
 
-    const [state, dispatch] = useStore()
+    const [btnTitle, setBtnTitle] = useState(null)
 
-    // ===============================================================================
-    const activeFormId = state.activeFormId
-
-    let newArray = [...listOptions]
-
-    const newListOptions = _.filter(newArray, { formId: activeFormId })
-
-    // ===============================================================================
 
     const onCreate = (values) => {
 
         let newArray = _.cloneDeep(submitData)
 
         if (_.isEmpty(newArray)) {
-            console.log('lan dau')
             newArray.push(
                 {
                     btnid: collectionCreateForm.id,
@@ -56,9 +49,9 @@ const MainOption = (props) => {
                 }
             )
             setSubmitData(newArray);
-            // console.log('lan dau', newArray)
+            setCollectionCreateForm(null);
         } else {
-            _.remove(newArray, { btnid: collectionCreateForm.id });
+            _.remove(newArray, { btnid: collectionCreateForm.id })
             newArray.push(
                 {
                     btnid: collectionCreateForm.id,
@@ -67,28 +60,21 @@ const MainOption = (props) => {
                     data: values,
                 }
             )
-            setSubmitData(newArray)
-
-            console.log('lan sau', newArray)
+            setSubmitData(newArray);
+            setCollectionCreateForm(null);
         }
-
-
-        setSubmitData(newArray);
-
-        setCollectionCreateForm(null);
-
     };
+
+    const onChangeBtn = (value, btnid) => {
+
+        let index = _.findIndex(newListOptions, { id: btnid })
+        newListOptions[index].type = value
+
+    }
 
     return (
         <div style={{}}>
             <Row gutter={[8, 16]} align='middle'>
-
-                {/* <Steps current={state.process} style={{ marginBottom: '8px' }}>
-                    <Step title="Add new form" />
-                    <Step title="Add options" />
-                    <Step title="Fill form" />
-                    <Step title="Done" />
-                </Steps> */}
 
                 {_.map(newListOptions, (item) => {
                     return (
@@ -104,7 +90,7 @@ const MainOption = (props) => {
                                 block
                                 className={item.type}
                             >
-                                {item.type}
+                                {btnTitle ?? item.type}
                             </Button>
                         </Col>
                     )
@@ -114,15 +100,18 @@ const MainOption = (props) => {
 
             {!_.isEmpty(collectionCreateForm) && <CollectionCreateForm
                 collectionCreateForm={collectionCreateForm}
-                setCollectionCreateForm={setCollectionCreateForm}
+
                 state={state}
                 dispatch={dispatch}
-                submitData={submitData}
                 actions={actions}
+
+                onChangeBtn={onChangeBtn}
+                submitData={submitData}
                 typeOfProperty={state.typeOfProperty}
-                initialSelectData={initialSelectData}
+                // initialSelectData={initialSelectData}
                 onCreate={onCreate}
                 onCancel={() => {
+
                     setCollectionCreateForm(null);
                 }}
             />}

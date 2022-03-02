@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Modal, Form } from 'antd';
 import _ from 'lodash'
 
@@ -10,33 +10,51 @@ export const CollectionCreateForm = ({
     onCancel,
     submitData,
     collectionCreateForm,
-    setCollectionCreateForm,
+    onChangeBtn,
     typeOfProperty,
     initialSelectData,
+
+    state,
     dispatch,
     actions
+
 }) => {
 
     const [form] = Form.useForm();
 
-    const { type } = collectionCreateForm
+    const [initialValues, setInitialValues] = useState(() => {
 
+        let initialValues = _.find(submitData, ['btnid', collectionCreateForm.id]);
+
+        return initialValues?.data
+    });
 
     const onChanged = (value) => {
-        setCollectionCreateForm({ ...collectionCreateForm, type: value })
+
+        setInitialValues({ ...initialValues, type: value })
+
+        form.setFieldsValue({
+            label: null,
+            name: null,
+            required: null,
+            selected: null,
+            errormessage: null,
+            selectedMultiple: undefined,
+        })
+
+        onChangeBtn(value, collectionCreateForm.id)
+
         dispatch(actions.setActiveOption(value))
+
     }
-    const initialValues = _.find(submitData, ['btnid', collectionCreateForm.id])
 
     const typeFormItem = {
         'label': props => <Label {...props} />,
         'name': props => <Name {...props} />,
         'required': props => <Required {...props} />,
-        'type': props => <Type {...props} />,
         'select': props => <Selected {...props} />,
         'select-multiple': props => <SelectMultiple {...props} />
     }
-
 
     return (
         <Modal
@@ -63,17 +81,23 @@ export const CollectionCreateForm = ({
                 form={form}
                 name="form_in_modal"
                 layout="vertical"
-                initialValues={initialValues?.data ?? { type: collectionCreateForm.type }}
+                initialValues={initialValues ?? { type: collectionCreateForm.type }}
             >
-                {_.map(typeOfProperty[collectionCreateForm.type], (items) => {
+                <Type form={form} active={collectionCreateForm.type} onChanged={onChanged} typeOfProperty={typeOfProperty} />
+
+                {_.map(typeOfProperty[initialValues?.type ?? collectionCreateForm.type], (items) => {
                     return (
                         typeFormItem[items]({
+
                             data: submitData,
                             form: form,
-                            onChanged: onChanged,
-                            active: type,
+                            initialRequired: initialValues?.required,
                             typeOfProperty: typeOfProperty,
-                            initialSelectData: initialSelectData
+                            initialSelectData: initialSelectData,
+                            state: state,
+                            dispatch: dispatch,
+                            actions: actions
+
                         })
                     )
                 })}

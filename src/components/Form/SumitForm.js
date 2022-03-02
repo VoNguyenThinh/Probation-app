@@ -3,9 +3,9 @@ import { Tabs, Row, Col, Button, Space, Form, Input, Select, Pagination, Radio, 
 import { useStore, actions } from '../../store'
 import _ from 'lodash'
 
+import { InputConfig, DatePickerConfig, RadioConfig, SelectConfig } from '../../constans/FormItem';
+
 const { TabPane } = Tabs;
-const { Option } = Select;
-const { RangePicker } = DatePicker;
 
 function SumitForm(props) {
     const testData = [
@@ -31,17 +31,7 @@ function SumitForm(props) {
 
     const data = state.allData
 
-    // console.log(data)
-
     const dataTabTitle = _.uniqBy(data, 'formId')//============||||
-
-    const checkInitData = () => {
-        if (dataTabTitle.length === 1) {
-            return true
-        } else {
-            return false
-        }
-    }
 
     const [precess, setProcess] = useState(0)
 
@@ -52,6 +42,9 @@ function SumitForm(props) {
     const [form] = Form.useForm()
 
     // ===================================Function====================================================
+
+    const checkInitData = () => dataTabTitle.length === 1
+
     const filterData = (formId) => {
         return _.filter(data, { formId: formId })
     }
@@ -68,10 +61,6 @@ function SumitForm(props) {
     }
 
     const onFinish = (fieldsValue) => {
-        // const values = {
-        //     ...fieldsValue,
-        //     'date-picker': fieldsValue['date-picker'].format('YYYY-MM-DD'),
-        // };
         console.log(fieldsValue)
     }
 
@@ -85,101 +74,8 @@ function SumitForm(props) {
             setVisible(false)
         }
     }
+
     // ===================================End_Function====================================================
-
-    const InputConfig = (props) => {
-        const { label, name, required, errormessage } = props
-        const checkReq = required === 'yes' ? true : false
-
-        return (
-            <Form.Item
-                wrapperCol={{ offset: 0, span: 10 }}
-                labelCol={{ offset: 0, span: 2 }}
-                label={label}
-                name={name}
-                rules={[{ required: checkReq, message: `${errormessage}` }]}
-            >
-                <Input />
-            </Form.Item>
-
-        )
-    }
-
-    const SelectConfig = (props) => {
-        const { label, name, selected, errormessage } = props
-        const selectedObj = JSON.parse(selected)
-
-        return (
-            <Form.Item
-                wrapperCol={{ offset: 0, span: 10 }}
-                labelCol={{ offset: 0, span: 2 }}
-                label={label}
-                name={name}
-                rules={[{
-                    required: true,
-                    message: `${errormessage}`
-                }]}
-            >
-                <Select  >
-                    <Option value={selectedObj.value}>{selectedObj.name}</Option>
-                </Select>
-
-            </Form.Item>
-
-        )
-    }
-
-    const RadioConfig = (props) => {
-        const { selected, label, name, required, errormessage, } = props
-        const checkReq = required === 'yes' ? true : false
-
-        let selectedArray = []
-        _.map(selected, (item) => {
-            selectedArray.push(JSON.parse(item))
-        })
-
-        return (
-            <Form.Item
-                rules={[{ required: checkReq, message: `${errormessage}` }]}
-                name={name}
-                label={label}
-                wrapperCol={{ offset: 0, span: 10 }}
-                labelCol={{ offset: 0, span: 2 }}
-            >
-                <Radio.Group>
-                    {
-                        _.map(selectedArray, (item, index) => {
-                            return (
-                                <Radio key={index} value={item.value}>{item.name}</Radio>
-                            )
-                        })
-                    }
-                </Radio.Group>
-            </Form.Item>
-        )
-    }
-
-    const DatePickerConfig = (props) => {
-        const { label, name, required, errormessage, } = props
-        const checkReq = required === 'yes' ? true : false
-
-        return (
-            <Form.Item
-                name={name}
-                label={label}
-                style={{ marginLeft: '30px' }}
-                rules={[
-                    {
-                        type: 'object',
-                        required: checkReq,
-                        message: `${errormessage}`,
-                    },
-                ]}
-            >
-                <DatePicker />
-            </Form.Item>
-        )
-    }
 
     const typeOfProperty = {
         'TEXT': props => <InputConfig {...props} />,
@@ -210,7 +106,8 @@ function SumitForm(props) {
                                                     name: item.data.name,
                                                     required: item.data.required,
                                                     errormessage: item.data.errormessage,
-                                                    selected: item.data.selected
+                                                    selected: item.data.selected,
+                                                    selectedMultiple: item.data.selectedMultiple,
                                                 })
                                             )
                                         })}

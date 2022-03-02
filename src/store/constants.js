@@ -17,3 +17,5 @@ export const SET_TYPE = 'set_type';
 export const SET_FORM_TITLE = 'set_form_type';
 
 export const SET_ALL_DATA = 'set_all_data';
+
+export const ADD_INIT_SELECT_DATA = 'add_init_select_data';

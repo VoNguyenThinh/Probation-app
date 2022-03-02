@@ -7,19 +7,25 @@ import { SET_PROCESS } from './constants'
 import { SET_ACTIVE_OPTION } from './constants'
 import { SET_FORM_TITLE } from './constants'
 import { SET_ALL_DATA } from './constants'
+import { ADD_INIT_SELECT_DATA } from './constants'
 
 import { v4 as uuidv4 } from 'uuid';
 
 const inittialState = {
     listForms: [],
     listOptions: [],
-    allData: [],
+
+    allData: [],//inUSe
     typeOfProperty: {
-        'TEXT': ['type', 'label', 'name', 'required'],
-        'SELECT': ['type', 'label', 'name', 'select'],
-        'RADIO': ['type', 'label', 'name', 'select-multiple', 'required',],
-        'DATE PICKER': ['type', 'label', 'name', 'required'],
-    },
+        'TEXT': ['label', 'name', 'required'],
+        'SELECT': ['label', 'name', 'select', 'required'],
+        'RADIO': ['label', 'name', 'select-multiple', 'required',],
+        'DATE PICKER': ['label', 'name', 'required'],
+    },//inUSe
+    initialSelectData: [
+        { name: "Apple", value: "apple" },
+        { name: "Banana", value: "banana" }
+    ],//inUSe
 
     activeFormId: '', //inUSe
     activeOption: '',//inUse
@@ -28,9 +34,6 @@ const inittialState = {
     process: 0, //inUse
     clicked: false, //inUse
     activeFormTitle: '', //inUse
-
-
-
 }
 function Reducer(state, action) {
     switch (action.type) {
@@ -108,8 +111,15 @@ function Reducer(state, action) {
                 allData: action.payload
             }
         }
+        case ADD_INIT_SELECT_DATA: {
+            return {
+                ...state,
+                initialSelectData: [...state.initialSelectData, action.payload]
+            }
+        }
     }
 }
 
 export { inittialState }
+
 export default Reducer

@@ -8,6 +8,7 @@ import { SET_PROCESS } from "./constants";
 import { SET_TYPE } from "./constants";
 import { SET_FORM_TITLE } from "./constants";
 import { SET_ALL_DATA } from "./constants";
+import { ADD_INIT_SELECT_DATA } from "./constants";
 
 
 export const setClicked = payload => ({
@@ -57,5 +58,10 @@ export const setFormTile = payload => ({
 
 export const setAllData = payload => ({
     type: SET_ALL_DATA,
+    payload
+})
+
+export const addInitSelectData = payload => ({
+    type: ADD_INIT_SELECT_DATA,
     payload
 }) 

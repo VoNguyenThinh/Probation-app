@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
 import { Button, Form, Input, Radio, Select, Divider, Typography, Space, Col, DatePicker } from 'antd';
 import _ from 'lodash'
-import * as rxActions from '../store/ReduxStore/Slice/MainSlice'
+import * as rxActions from '../../store/ReduxStore/Slice/MainSlice'
 
 
 const { Option } = Select;

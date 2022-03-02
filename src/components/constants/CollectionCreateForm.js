@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Modal, Form } from 'antd';
 import _ from 'lodash'
-import { Label, Name, Required, Selected, SelectMultiple, Type, } from '../constans/FormItem';
+import { Label, Name, Required, Selected, SelectMultiple, Type, } from '../constants/FormItem';
 
-import * as rxActions from '../store/ReduxStore/Slice/MainSlice'
+import * as rxActions from '../../store/ReduxStore/Slice/MainSlice'
 
 export const CollectionCreateForm = ({
     onCreate,
@@ -13,8 +13,6 @@ export const CollectionCreateForm = ({
     onChangeBtn,
     typeOfProperty,
     state,
-    dispatch,
-    actions,
 
     rxState,
     rxDispatch,
@@ -98,8 +96,6 @@ export const CollectionCreateForm = ({
                             initialRequired: initialValues?.required,
                             typeOfProperty: typeOfProperty,
                             state: state,
-                            dispatch: dispatch,
-                            actions: actions,
                             rxState: rxState,
                             rxDispatch: rxDispatch,
                             addInitSelectData: addInitSelectData,

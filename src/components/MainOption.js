@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { Button, Row, Col, Steps } from 'antd';
 import _ from 'lodash'
 import '../App.css'
-import { Save } from '../constans/FormItem';
-import { CollectionCreateForm } from '../constans/CollectionCreateForm'
+import { Save } from './constants/FormItem';
+
+import { CollectionCreateForm } from './constants/CollectionCreateForm'
 
 import { useDispatch, useSelector } from 'react-redux';
 import { selectMainSlice } from '../store/ReduxStore/Slice/MainSlice';

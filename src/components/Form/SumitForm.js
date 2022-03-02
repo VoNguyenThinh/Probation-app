@@ -1,9 +1,12 @@
 import React, { useEffect, useState, } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Tabs, Row, Col, Button, Space, Form, Input, Select, Pagination, Radio, DatePicker } from "antd"
-import _ from 'lodash'
 
-import { InputConfig, DatePickerConfig, RadioConfig, SelectConfig } from '../../constans/FormItem';
+import { useSelector, useDispatch } from 'react-redux';
+
+import { Tabs, Row, Col, Button, Space, Form, Input, Select, Pagination, Radio, DatePicker } from "antd"
+
+import { InputConfig, DatePickerConfig, RadioConfig, SelectConfig } from '../constants/FormItem';
+
+import _ from 'lodash'
 
 import { selectMainSlice } from '../../store/ReduxStore/Slice/MainSlice';
 
@@ -14,8 +17,6 @@ function SumitForm(props) {
     const rxState = useSelector(selectMainSlice) //==================================FROM REDUX=======================
 
     const data = rxState.allData
-
-    useEffect(() => { })
 
     const dataTabTitle = _.uniqBy(data, 'formId')
 
@@ -103,7 +104,7 @@ function SumitForm(props) {
                         </Tabs>
 
                         <Space>
-                            <Pagination hideOnSinglePage={_.isEmpty(data) ? true : false} defaultCurrent={1} current={current} pageSize={1} onChange={pageChage} total={dataTabTitle.length} />
+                            <Pagination hideOnSinglePage={_.isEmpty(data)} defaultCurrent={1} current={current} pageSize={1} onChange={pageChage} total={dataTabTitle.length} />
                             <Form.Item >
                                 {visible && <Button
                                     type='primary'

@@ -1,0 +1,37 @@
+#btnCreatAccount {
+  text-align: left;
+  padding-left: 0;
+  top: -15px;
+}
+
+//Mobile Stytle
+@media only screen and (max-width: 900px) {
+  .mainRow {
+    height: 740px;
+  }
+  .mainColum {
+    background: "white";
+    padding: 20px 20px 20px 20px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border-radius: 7px;
+  }
+  .antdFormItem{
+    margin-bottom: 20px;
+  }
+}
+
+// PC stytle
+@media only screen and (min-width: 740px) {
+  .mainColum {
+    background: "white";
+    padding: 30px 30px 30px 30px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border-radius: 7px;
+  }
+  .mainRow {
+    height: 900px;
+  }
+    .antdFormItem{
+    margin-bottom: 20px;
+  }
+}

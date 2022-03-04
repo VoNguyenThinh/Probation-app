@@ -1,0 +1,63 @@
+.logo {
+  height: 32px;
+  margin: 16px;
+  background: rgba(255, 255, 255, 0.2);
+}
+// For mobile
+@media only screen and (max-width: 900px) {
+  .logo {
+    background-color: #001529;
+    margin: 15px;
+  }
+  .dbContent {
+    height: 544px;
+    width: 100%;
+
+    overflow: scroll;
+    // overflow-x: hidden;
+    // text-overflow: ellipsis;
+  }
+  .dbFooter {
+    text-align: center;
+    background-color: rebeccapurple;
+  }
+  .dbFooter::after {
+    content: "ANTD ©2022";
+  }
+  .dbMenuItem {
+    background-color: #fff !important;
+  }
+  .dbMenu {
+    background: #fff !important;
+  }
+}
+
+//For PC
+@media only screen and (min-width: 740px) {
+  .logo {
+    background-color: #001529;
+    margin: 10px;
+  }
+  .dbContent {
+    overflow: scroll;
+
+    overflow-x: hidden;
+
+    height: 750px;
+
+    padding: 15px;
+  }
+  .dbFooter {
+    text-align: center;
+    background: linear-gradient(#6259ca, #473ace) !important;
+  }
+  .dbFooter::after {
+    content: "Ant Design ©2022 Created by Ant UED";
+  }
+  .dbMenuItem {
+    background-color: #fff !important;
+  }
+  .dbMenu {
+    background: #fff !important;
+  }
+}

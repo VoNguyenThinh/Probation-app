@@ -1,0 +1,24 @@
+.ant-layout-sider-zero-width-trigger {
+  background-color: #fff;
+
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 5px 8px;
+}
+.anticon-bars {
+  color: #5f27cd;
+  top: 50px;
+}
+
+.ant-menu-item {
+  /* background-color: palegoldenrod; */
+  color: #495584 !important;
+}
+.ant-menu-item-selected {
+  background: linear-gradient(#6259ca, rgba(98, 89, 202, 0.6)) !important;
+  border-radius: 15px 50px 30px !important;
+  left: 5px !important;
+  width: 180px !important;
+}
+
+/* .ant-menu-item-active {
+  background-color: palegoldenrod;
+} */

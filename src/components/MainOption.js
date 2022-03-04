@@ -35,30 +35,18 @@ const MainOption = (props) => {
 
         let newArray = _.cloneDeep(submitData)
 
-        if (_.isEmpty(newArray)) {
-            newArray.push(
-                {
-                    btnid: collectionCreateForm.id,
-                    formId: activeFormId,
-                    formTitle: collectionCreateForm.formTitle,
-                    data: values,
-                }
-            )
-            setSubmitData(newArray);
-            setCollectionCreateForm(null);
-        } else {
-            _.remove(newArray, { btnid: collectionCreateForm.id })
-            newArray.push(
-                {
-                    btnid: collectionCreateForm.id,
-                    formId: activeFormId,
-                    formTitle: collectionCreateForm.formTitle,
-                    data: values,
-                }
-            )
-            setSubmitData(newArray);
-            setCollectionCreateForm(null);
-        }
+        if (!_.isEmpty(newArray))  _.remove(newArray, { btnid: collectionCreateForm.id })
+
+        newArray.push(
+            {
+                btnid: collectionCreateForm.id,
+                formId: activeFormId,
+                formTitle: collectionCreateForm.formTitle,
+                data: values,
+            }
+        )
+        setSubmitData(newArray);
+        setCollectionCreateForm(null);
     };
 
     const onChangeBtn = (value, btnid) => {

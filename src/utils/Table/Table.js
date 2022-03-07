@@ -5,14 +5,24 @@ import styles from "./Table.module.scss";
 // import Table from "ant-responsive-table";
 const columns = [
   {
-    title: "Name",
-    dataIndex: "name",
-    // width: "33.3%",
+    title: "No.",
+    dataIndex: "no",
   },
   {
-    title: "Age",
-    dataIndex: "age",
-    // width: "33.3%",
+    title: "Name",
+    dataIndex: "name",
+  },
+  {
+    title: "Phone",
+    dataIndex: "Phone",
+  },
+  {
+    title: "Gender",
+    dataIndex: "gender",
+  },
+  {
+    title: "Action",
+    dataIndex: "address",
   },
 ];
 
@@ -41,6 +51,8 @@ const data = [
 ];
 
 function TableContent(props) {
+  console.log(styles);
+
   return (
     <div className={styles.mainTableContent}>
       <>

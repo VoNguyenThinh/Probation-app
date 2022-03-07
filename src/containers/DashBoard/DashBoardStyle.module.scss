@@ -6,37 +6,49 @@
 // For mobile
 @media only screen and (max-width: 900px) {
   .logo {
-    background-color: #001529;
-    margin: 15px;
+    border: 1px black solid !important;
   }
   .dbContent {
-    height: 544px;
+    height: 687px;
     width: 100%;
 
     overflow: scroll;
-    // overflow-x: hidden;
-    // text-overflow: ellipsis;
+    overflow-x: hidden;
   }
   .dbFooter {
+    bottom: 0;
+    width: 100%;
+    position: fixed;
+
     text-align: center;
-    background-color: rebeccapurple;
+    background: linear-gradient(#6259ca, #473ace) !important;
   }
   .dbFooter::after {
     content: "ANTD ©2022";
   }
   .dbMenuItem {
     background-color: #fff !important;
+    a {
+      color: black !important;
+    }
   }
   .dbMenu {
     background: #fff !important;
+  }
+  .dbSider {
+    position: absolute;
+    z-index: 1;
+  }
+  .heading {
+    background-color: #fff;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
   }
 }
 
 //For PC
 @media only screen and (min-width: 740px) {
   .logo {
-    background-color: #001529;
-    margin: 10px;
+    border: 1px black solid !important;
   }
   .dbContent {
     overflow: scroll;
@@ -56,8 +68,18 @@
   }
   .dbMenuItem {
     background-color: #fff !important;
+    a {
+      color: black !important;
+    }
   }
   .dbMenu {
     background: #fff !important;
+  }
+  .dbSider {
+    position: relative;
+  }
+  .heading {
+    background-color: #fff;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
   }
 }

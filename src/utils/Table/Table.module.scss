@@ -3,7 +3,13 @@
   .mainTableContent {
     padding: 25px;
     font-size: smaller;
-    // overflow: scroll;
+    overflow: scroll;
+    Table {
+      th {
+        background-color: red;
+        min-width: 100px !important;
+      }
+    }
   }
 }
 
@@ -11,6 +17,5 @@
 @media only screen and (min-width: 740px) {
   .mainTableContent {
     padding: 25px;
-    // border: 1px solid red;
   }
 }

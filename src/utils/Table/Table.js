@@ -1,65 +1,120 @@
 import React from "react";
-import { Table } from "antd";
+import { Table, Row, Col, Button, Popconfirm, message, Space } from "antd";
+import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import { Link } from "react-router-dom";
+
 import styles from "./Table.module.scss";
 
-// import Table from "ant-responsive-table";
-const columns = [
-  {
-    title: "No.",
-    dataIndex: "no",
-  },
-  {
-    title: "Name",
-    dataIndex: "name",
-  },
-  {
-    title: "Phone",
-    dataIndex: "Phone",
-  },
-  {
-    title: "Gender",
-    dataIndex: "gender",
-  },
-  {
-    title: "Action",
-    dataIndex: "address",
-  },
-];
-
-const data = [
-  {
-    key: "1",
-    name: "John Brown",
-    age: 32,
-    address: "New York No. 1 Lake Park",
-    tags: ["nice", "developer"],
-  },
-  {
-    key: "2",
-    name: "Jim Green",
-    age: 42,
-    address: "London No. 1 Lake Park",
-    tags: ["loser"],
-  },
-  {
-    key: "3",
-    name: "Joe Black",
-    age: 32,
-    address: "Sidney No. 1 Lake Park",
-    tags: ["cool", "teacher"],
-  },
-];
+import { useSelector, useDispatch } from "react-redux";
+import { getUserState } from "../../store/ReduxStore/Slice/UserSlice";
+import * as rxAction from "../../store/ReduxStore/Slice/UserSlice";
 
 function TableContent(props) {
-  console.log(styles);
+  const rxState = useSelector(getUserState);
+  const data = rxState.listUser;
+  const rxDispatch = useDispatch();
+
+  const handleDelete = (key) => {
+    rxDispatch(rxAction.deleteUser(key.userId));
+  };
+
+  const columns = [
+    {
+      title: "Name",
+      dataIndex: "lastName",
+      key: "lastName",
+    },
+    {
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
+    },
+    {
+      title: "Phone",
+      dataIndex: "phone",
+      key: "phone",
+    },
+    {
+      title: "Gender",
+      dataIndex: "gender",
+      key: "gender",
+    },
+    {
+      title: "Action",
+      width: "20%",
+      align: "center",
+      key: "action",
+      render: (record) => {
+        return (
+          <>
+            <Space>
+              <Link to={`/view-detail/${record.userId}`}>
+                <Button icon={<EditOutlined />} type="primary">
+                  Edit &nbsp; &nbsp;
+                </Button>
+              </Link>
+
+              <Popconfirm
+                title="Delete user?"
+                onConfirm={() => {
+                  handleDelete(record);
+                }}
+                okText="Yes"
+                cancelText="No"
+              >
+                <Button icon={<DeleteOutlined />} type="danger">
+                  Delete
+                </Button>
+              </Popconfirm>
+            </Space>
+          </>
+        );
+      },
+    },
+  ];
 
   return (
-    <div className={styles.mainTableContent}>
-      <>
-        <h3>Simple Table</h3>
-        <Table columns={columns} dataSource={data} pagination={false} />
-      </>
-    </div>
+    <>
+      {/* For PC */}
+      <Row className={styles.TableContent_PC}>
+        <Col span={1} />
+
+        <Col span={22} className={styles.mainColContent}>
+          <div className={styles.mainTable_title}>
+            <h1>LIST OF USER</h1>
+          </div>
+          <div className={styles.mainTableContent}>
+            <Table
+              columns={columns}
+              dataSource={data}
+              pagination={false}
+              bordered
+              rowKey={"userId"}
+            />
+          </div>
+        </Col>
+
+        <Col span={1} />
+      </Row>
+      {/* For Mobile */}
+
+      <Row className={styles.TableContent_Mobile}>
+        <Col span={24} className={styles.mainColContent}>
+          <div className={styles.mainTable_title}>
+            <h1>LIST OF USER</h1>
+          </div>
+
+          <div className={styles.mainTableContent}>
+            <Table
+              columns={columns}
+              dataSource={data}
+              pagination={false}
+              size="small"
+            />
+          </div>
+        </Col>
+      </Row>
+    </>
   );
 }
 

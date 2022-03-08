@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./UserProfile_Style.module.scss";
-import { Image, Card, Row, Col, Form, Input, Select, Button } from "antd";
+import { Image, Card, Row, Col } from "antd";
 import {
   UserOutlined,
   SyncOutlined,
@@ -8,9 +8,27 @@ import {
   PhoneOutlined,
   MailOutlined,
 } from "@ant-design/icons";
-
+import _ from "lodash";
 import UserForm from "../Form/UserForm";
+import CreateUSer from "../CreateUsers/CreateUser";
+import { useParams } from "react-router-dom";
+
+import { getUserState } from "../../store/ReduxStore/Slice/UserSlice";
+import { useSelector, useDispatch } from "react-redux";
+import * as rxAction from "../../store/ReduxStore/Slice/UserSlice";
+
 function UserProfile(props) {
+  const { id } = useParams();
+  const rxState = useSelector(getUserState);
+  const userDetail = _.find(rxState.listUser, { userId: id });
+
+  const rxDispatch = useDispatch();
+
+  const updateUser = (values) => {
+    values.userId = id;
+    rxDispatch(rxAction.updateUser(values));
+  };
+
   return (
     <>
       {/* For PC */}
@@ -27,18 +45,17 @@ function UserProfile(props) {
                   />
                   {/* Username */}
                   <div className={styles.UserPro_name}>
-                    <h1>VO NGUYEN THINH</h1>
+                    <h1>
+                      {userDetail.lastName} {userDetail.firstName}
+                    </h1>
 
-                    <p className={styles.Bio}>
-                      Survived not only five centuries, but also the leap into
-                      electronic typesetting.
-                    </p>
+                    <p className={styles.Bio}>{userDetail.bio}</p>
                   </div>
                 </div>
               </Col>
               <Col className={styles.rightContent} span={14}>
                 <div className={styles.detail}>
-                  <UserForm />
+                  <UserForm userDetail={userDetail} updateUser={updateUser} />
                 </div>
               </Col>
             </Row>
@@ -49,95 +66,11 @@ function UserProfile(props) {
       {/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */}
       {/* For Mobile */}
       <div className={styles.User_Profile_Mobile}>
-        {/* avatar */}
-
-        <div className={styles.UserPro_avatar}>
-          <Image
-            width={120}
-            src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
-          />
-          {/* Username */}
-          <div className={styles.UserPro_name}>
-            <h3>This is name</h3>
-            <p>---Some thing---</p>
-          </div>
-        </div>
-        {/* More items */}
-        <div className={styles.UserPro_items}>
-          <Card
-            size="small"
-            type="inner"
-            title={
-              <h4>
-                <UserOutlined />
-                &nbsp; Username:
-              </h4>
-            }
-            headStyle={{ background: "#fff" }}
-          >
-            Nguyen Thinh
-          </Card>
-        </div>
-        <div className={styles.UserPro_items}>
-          <Card
-            size="small"
-            type="inner"
-            title={
-              <h4>
-                <PushpinOutlined />
-                &nbsp; Address:
-              </h4>
-            }
-            headStyle={{ background: "#fff" }}
-          >
-            New York No. 1 Lake Park
-          </Card>
-        </div>
-        <div className={styles.UserPro_items}>
-          <Card
-            size="small"
-            type="inner"
-            title={
-              <h4>
-                <SyncOutlined />
-                &nbsp; Age:
-              </h4>
-            }
-            headStyle={{ background: "#fff" }}
-          >
-            20
-          </Card>
-        </div>
-        <div className={styles.UserPro_items}>
-          <Card
-            size="small"
-            type="inner"
-            title={
-              <h4>
-                <PhoneOutlined />
-                &nbsp; Phone:
-              </h4>
-            }
-            headStyle={{ background: "#fff" }}
-          >
-            0777-058-0669
-          </Card>
-        </div>
-        <div className={styles.UserPro_items}>
-          <Card
-            size="small"
-            type="inner"
-            title={
-              <h4>
-                <MailOutlined />
-                &nbsp; Email:
-              </h4>
-            }
-            headStyle={{ background: "#fff" }}
-          >
-            admin@gmail.com
-          </Card>
-        </div>
+        <CreateUSer
+          title="UPDATE USER"
+          userDetail={userDetail}
+          updateUser={updateUser}
+        />
       </div>
     </>
   );

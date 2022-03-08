@@ -8,7 +8,6 @@ import { UserOutlined, LockOutlined, KeyOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 
 function SignInPage(props) {
-  console.log(styles);
   return (
     <div className="container">
       <div className="login-fomrm">

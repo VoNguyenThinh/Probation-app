@@ -1,4 +1,4 @@
-import { Layout, Menu } from "antd";
+import { Layout, Menu, Avatar, Image } from "antd";
 import styles from "./DashBoardStyle.module.scss";
 
 import "./index.scss";
@@ -43,7 +43,7 @@ function DashBoard({ children }) {
               key="1"
               icon={<UserOutlined />}
             >
-              <Link to={"/list-users"}> LIST USERS</Link>
+              <Link to={"/dash-board"}> LIST USERS</Link>
             </Menu.Item>
 
             <Menu.Item
@@ -57,7 +57,7 @@ function DashBoard({ children }) {
         </Sider>
 
         <Layout>
-          <Header className={styles.heading} style={{ padding: 0 }} />
+          <Header className={styles.heading} style={{ padding: 0 }}></Header>
           <Content style={{ margin: "24px 16px 0" }}>
             <div className={styles.dbContent} style={{ background: "#fff" }}>
               {children}

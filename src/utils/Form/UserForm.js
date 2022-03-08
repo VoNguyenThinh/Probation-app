@@ -1,27 +1,39 @@
 import React from "react";
 import { Row, Col, Form, Input, Select, Button } from "antd";
+import styles from "./UserFormStyle.module.scss";
 const { Option } = Select;
+
 function UserForm(props) {
+  const { CreateUser, userDetail, updateUser } = props;
+  const [form] = Form.useForm();
+
   const onFinish = (values) => {
-    console.log(values);
+    values.userId = userDetail?.userId;
+    updateUser ? updateUser(values) : CreateUser(values);
   };
+
   return (
-    <Form layout="vertical" onFinish={onFinish}>
+    <Form
+      layout="vertical"
+      onFinish={onFinish}
+      form={form}
+      initialValues={userDetail}
+    >
       {/* 2 Colums */}
 
       <Row>
-        <Col span={12} style={{ padding: "0px 10px 0px 10px" }}>
+        <Col span={12} className={styles.FormCol12}>
           <Form.Item
-            name="FirstName"
+            name="firstName"
             label="First name"
             rules={[{ required: true, message: `Please input` }]}
           >
             <Input placeholder="Input placehoder" />
           </Form.Item>
         </Col>
-        <Col span={12} style={{ padding: "0px 10px 0px 10px" }}>
+        <Col span={12} className={styles.FormCol12}>
           <Form.Item
-            name="LastName"
+            name="lastName"
             label="Last name"
             rules={[{ required: true, message: `Please input` }]}
           >
@@ -32,16 +44,22 @@ function UserForm(props) {
       {/* 2 Colums */}
 
       <Row>
-        <Col span={12} style={{ padding: "0px 15px 0px 10px" }}>
+        <Col span={12} className={styles.FormCol12}>
           <Form.Item
             name="email"
             label="Email"
-            rules={[{ required: true, message: `Please input` }]}
+            rules={[
+              {
+                required: true,
+                type: "email",
+                message: `Invalid email format`,
+              },
+            ]}
           >
             <Input placeholder="Input placehoder" />
           </Form.Item>
         </Col>
-        <Col span={12} style={{ padding: "0px 10px 0px 10px" }}>
+        <Col span={12} className={styles.FormCol12}>
           <Form.Item
             name="phone"
             label="Phone"
@@ -54,9 +72,9 @@ function UserForm(props) {
       {/* 2 Colums */}
 
       <Row>
-        <Col span={12} style={{ padding: "0px 10px 0px 10px" }}>
+        <Col span={12} className={styles.FormCol12}>
           <Form.Item
-            name="Gender"
+            name="gender"
             label="Gender"
             rules={[{ required: true, message: `Please Select one` }]}
           >
@@ -67,7 +85,7 @@ function UserForm(props) {
             </Select>
           </Form.Item>
         </Col>
-        <Col span={12} style={{ padding: "0px 10px 0px 10px" }}>
+        <Col span={12} className={styles.FormCol12}>
           <Form.Item
             name="address"
             label="Address"
@@ -80,7 +98,7 @@ function UserForm(props) {
 
       {/* 1Colum */}
       <Row>
-        <Col span={24} style={{ padding: "0px 10px 0px 10px" }}>
+        <Col span={24} className={styles.FormCol12}>
           <Form.Item
             name="password"
             label="Password"
@@ -93,7 +111,7 @@ function UserForm(props) {
 
       {/* 2 Colums */}
       <Row>
-        <Col span={24} style={{ padding: "0px 10px 0px 10px" }}>
+        <Col span={24} className={styles.FormCol12}>
           <Form.Item
             name="bio"
             label="Bio"
@@ -104,22 +122,41 @@ function UserForm(props) {
         </Col>
       </Row>
 
-      <Row>
-        <Col span={12} style={{ padding: "0px 2px 0px 10px" }}>
-          <Form.Item>
-            <Button htmlType="submit" type="primary" block>
-              SAVE
-            </Button>
-          </Form.Item>
-        </Col>
-        <Col span={12} style={{ padding: "0px 10px 0px 2px" }}>
-          <Form.Item>
-            <Button type="danger" block>
-              CANCEL
-            </Button>
-          </Form.Item>
-        </Col>
-      </Row>
+      {!userDetail ? (
+        <Row>
+          <Col span={12} className={styles.FormCol12}>
+            <Form.Item>
+              <Button htmlType="submit" type="primary" block>
+                SAVE
+              </Button>
+            </Form.Item>
+          </Col>
+          <Col span={12} className={styles.FormCol12}>
+            <Form.Item>
+              <Button htmlType="reset" type="danger" block>
+                CANCEL
+              </Button>
+            </Form.Item>
+          </Col>
+        </Row>
+      ) : (
+        <Row>
+          <Col span={12} className={styles.FormCol12}>
+            <Form.Item>
+              <Button htmlType="submit" type="primary" block>
+                Edit
+              </Button>
+            </Form.Item>
+          </Col>
+          <Col span={12} className={styles.FormCol12}>
+            <Form.Item>
+              <Button htmlType="reset" type="danger" block>
+                CANCEL
+              </Button>
+            </Form.Item>
+          </Col>
+        </Row>
+      )}
     </Form>
   );
 }

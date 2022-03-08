@@ -6,6 +6,7 @@ import SingnUpPage from "../containers/SignUpPage/SignUpPage";
 import DashBoard from "../containers/DashBoard/DashBoard";
 import TableContent from "../utils/Table/Table";
 import UserProfile from "../utils/UserProfile/UserProfile";
+import CreateUser from "../utils/CreateUsers/CreateUser";
 
 function MainRouters() {
   return (
@@ -21,10 +22,15 @@ function MainRouters() {
           </Route>
           <DashBoard>
             <Switch>
-              <Route path="/list-users">
+              <Route path="/dash-board">
                 <TableContent />
               </Route>
+
               <Route path="/create-user">
+                <CreateUser />
+              </Route>
+
+              <Route path="/view-detail/:id">
                 <UserProfile />
               </Route>
             </Switch>

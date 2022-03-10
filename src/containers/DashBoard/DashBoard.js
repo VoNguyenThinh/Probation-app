@@ -1,21 +1,37 @@
-import { Layout, Menu, Avatar, Image } from "antd";
+import { Layout, Menu, Dropdown, Switch, Space } from "antd";
+
 import styles from "./DashBoardStyle.module.scss";
 
 import "./index.scss";
-import Table from "../../utils/Table/Table";
-import UserProfile from "../../utils/UserProfile/UserProfile";
 
-import {
-  UploadOutlined,
-  UserOutlined,
-  VideoCameraOutlined,
-} from "@ant-design/icons";
+import { UserOutlined, VideoCameraOutlined } from "@ant-design/icons";
 
 import { Link } from "react-router-dom";
+
+import { getLanguage } from "../../store/ReduxStore/Slice/TranlationsSlice";
+import { useSelector, useDispatch } from "react-redux";
+import * as rxAction from "../../store/ReduxStore/Slice/TranlationsSlice";
 
 const { Header, Content, Footer, Sider } = Layout;
 
 function DashBoard({ children }) {
+  const rxState = useSelector(getLanguage);
+  const rxDispatch = useDispatch();
+  const changeLocale = (value) => {
+    const locale = value ? "vn" : "en";
+    rxDispatch(rxAction.changeLocale(locale));
+  };
+
+  const menu = (
+    <Menu>
+      <Link to={"/"}>
+        <Menu.Item key="1" icon={<UserOutlined />}>
+          User Profile
+        </Menu.Item>
+      </Link>
+    </Menu>
+  );
+
   return (
     <>
       <Layout>
@@ -28,6 +44,7 @@ function DashBoard({ children }) {
             backgroundColor: "#fff",
             boxShadow: "rgba(0, 0, 0, 0.24) 0px 5px 8px",
           }}
+          width="250"
         >
           <div className="logo" />
           <Menu
@@ -43,7 +60,9 @@ function DashBoard({ children }) {
               key="1"
               icon={<UserOutlined />}
             >
-              <Link to={"/dash-board"}> LIST USERS</Link>
+              <Link to={"/dash-board"}>
+                {rxState.locale[rxState.currentLocale].messages.db_list_users}
+              </Link>
             </Menu.Item>
 
             <Menu.Item
@@ -51,13 +70,27 @@ function DashBoard({ children }) {
               key="2"
               icon={<VideoCameraOutlined />}
             >
-              <Link to={"/create-user"}> CREATE USER</Link>
+              <Link to={"/create-user"}>
+                {rxState.locale[rxState.currentLocale].messages.db_create_user}
+              </Link>
             </Menu.Item>
           </Menu>
         </Sider>
 
         <Layout>
-          <Header className={styles.heading} style={{ padding: 0 }}></Header>
+          <Header className={styles.heading}>
+            <Space>
+              <Dropdown.Button overlay={menu} icon={<UserOutlined />}>
+                Dropdown
+              </Dropdown.Button>
+              <Switch
+                checkedChildren="VN"
+                unCheckedChildren="VN"
+                onChange={changeLocale}
+                defaultChecked={rxState.currentSwitch}
+              />
+            </Space>
+          </Header>
           <Content style={{ margin: "24px 16px 0" }}>
             <div className={styles.dbContent} style={{ background: "#fff" }}>
               {children}

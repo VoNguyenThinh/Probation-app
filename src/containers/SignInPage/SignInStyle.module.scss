@@ -7,15 +7,16 @@
 //Mobile Stytle
 @media only screen and (max-width: 900px) {
   .mainRow {
-    height: 740px;
+    height: 100vh;
+    background-image: linear-gradient(160deg, #0093e9 0%, #80d0c7 100%);
   }
   .mainColum {
-    background: "white";
+    background: white;
     padding: 20px 20px 20px 20px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     border-radius: 7px;
   }
-  .antdFormItem{
+  .antdFormItem {
     margin-bottom: 20px;
   }
 }
@@ -23,15 +24,16 @@
 // PC stytle
 @media only screen and (min-width: 740px) {
   .mainColum {
-    background: "white";
     padding: 30px 30px 30px 30px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     border-radius: 7px;
+    background: white;
   }
   .mainRow {
-    height: 900px;
+    height: 100vh;
+    background-image: linear-gradient(160deg, #0093e9 0%, #80d0c7 100%);
   }
-    .antdFormItem{
+  .antdFormItem {
     margin-bottom: 20px;
   }
 }

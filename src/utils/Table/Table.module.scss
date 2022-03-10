@@ -15,7 +15,6 @@
       background-color: #fff;
       min-height: 100px;
       border-radius: 8px;
-      // box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
       background-image: url("https://images.squarespace-cdn.com/content/v1/57e286d29f74569a6b997733/1567697014451-Y7RODCYOPATUROAGLP8J/abstract_polygons_wallpaper_by_cratemuncher-d6ys3ge.png?format=2500w");
       background-repeat: no-repeat;
       width: 100%;
@@ -32,13 +31,17 @@
       background-color: #fff;
       padding: 15px;
       border-radius: 8px;
-      overflow: scroll;
       box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
       Table {
         th {
           min-width: 150px !important;
         }
       }
+    }
+    .tableContentReposive {
+      width: 100% !important;
+      overflow: scroll !important;
+      // overflow-x: hidden !important;
     }
   }
 }

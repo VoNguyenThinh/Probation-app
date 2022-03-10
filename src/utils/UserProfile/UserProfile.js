@@ -14,12 +14,16 @@ import CreateUSer from "../CreateUsers/CreateUser";
 import { useParams } from "react-router-dom";
 
 import { getUserState } from "../../store/ReduxStore/Slice/UserSlice";
+import { getLanguage } from "../../store/ReduxStore/Slice/TranlationsSlice";
 import { useSelector, useDispatch } from "react-redux";
 import * as rxAction from "../../store/ReduxStore/Slice/UserSlice";
 
 function UserProfile(props) {
   const { id } = useParams();
+
   const rxState = useSelector(getUserState);
+
+  const rxStateLocale = useSelector(getLanguage);
   const userDetail = _.find(rxState.listUser, { userId: id });
 
   const rxDispatch = useDispatch();
@@ -29,6 +33,9 @@ function UserProfile(props) {
     rxDispatch(rxAction.updateUser(values));
   };
 
+  console.log(
+    rxStateLocale.locale[rxStateLocale.currentLocale].messages.compo_update_user
+  );
   return (
     <>
       {/* For PC */}
@@ -67,7 +74,10 @@ function UserProfile(props) {
       {/* For Mobile */}
       <div className={styles.User_Profile_Mobile}>
         <CreateUSer
-          title="UPDATE USER"
+          title={
+            rxStateLocale.locale[rxStateLocale.currentLocale].messages
+              .compo_update_user
+          }
           userDetail={userDetail}
           updateUser={updateUser}
         />

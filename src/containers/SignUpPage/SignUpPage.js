@@ -1,161 +1,60 @@
 import styles from "./SignUpStyle.module.scss";
 
-import React, { useState } from "react";
+import React from "react";
+
 import { useHistory } from "react-router-dom";
+
 import "antd/dist/antd.css";
-import { Form, Input, Button, Divider, Row, Col, Alert } from "antd";
-import {
-  UserOutlined,
-  LockOutlined,
-  KeyOutlined,
-  CheckOutlined,
-  FormOutlined,
-} from "@ant-design/icons";
+
+import { Row, Col } from "antd";
+
 import { v4 as uuidv4 } from "uuid";
+
 import _ from "lodash";
 
 import { useSelector, useDispatch } from "react-redux";
+
 import * as rxActions from "../../store/ReduxStore/Slice/UserSlice";
-import { getUserState } from "../../store/ReduxStore/Slice/UserSlice";
+
+import { getLanguage } from "../../store/ReduxStore/Slice/TranlationsSlice";
+
+import UserForm from "../../utils/Form/UserForm";
 
 function SignUpPage(props) {
   const rxDispath = useDispatch();
 
-  const rxState = useSelector(getUserState);
-
-  const [isConfirm, setIsConfirm] = useState(false);
+  const rxState = useSelector(getLanguage);
 
   const history = useHistory();
 
-  const onFinish = (values) => {
-    if (values.password !== values.confirmPassword) {
-      setIsConfirm(true);
-    } else {
-      const omitValues = _.omit(values, ["confirmPassword"]);
+  console.log(rxState.locale["en"].messages.signUp);
 
-      omitValues.userId = uuidv4();
+  const onSignUp = (values) => {
+    values.userId = uuidv4();
 
-      rxDispath(rxActions.createUser(omitValues));
+    rxDispath(rxActions.createUser(values));
 
-      setIsConfirm(false);
-
-      console.log(rxState);
-
-      history.push("/");
-    }
+    history.push("/dash-board");
   };
 
   return (
     <div className="container">
       <div className="login-fomrm">
         <Row align="middle" className={styles.mainRow}>
-          <Col xs={2} sm={4} md={6} lg={8} xl={9} span={9} />
+          <Col xs={1} xl={5} span={5} />
 
-          <Col
-            className={styles.mainColum}
-            xs={20}
-            sm={16}
-            md={12}
-            lg={8}
-            xl={6}
-            span={6}
-          >
-            <Divider plain>
-              <h3>SIGN UP</h3>
-            </Divider>
-
-            <Form onFinish={onFinish}>
-              {isConfirm && (
-                <Alert
-                  style={{ marginBottom: "24px" }}
-                  message="Please make sure the passwords match!"
-                  type="error"
-                  showIcon
-                />
-              )}
-
-              <Form.Item
-                name="email"
-                className={styles.antdFormItem}
-                rules={[
-                  {
-                    required: true,
-                    type: "email",
-                    message: "Invalid email format !",
-                  },
-                ]}
-              >
-                <Input
-                  size="large"
-                  placeholder="Email"
-                  prefix={<UserOutlined />}
-                />
-              </Form.Item>
-
-              <Form.Item
-                className={styles.antdFormItem}
-                name="password"
-                rules={[
-                  { required: true, message: "Please input your password!" },
-                ]}
-              >
-                <Input.Password
-                  size="large"
-                  placeholder="Password"
-                  prefix={<LockOutlined />}
-                />
-              </Form.Item>
-
-              <Form.Item
-                name="confirmPassword"
-                className={styles.antdFormItem}
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input your confirm password!",
-                  },
-                ]}
-              >
-                <Input.Password
-                  size="large"
-                  placeholder="Confirm Password"
-                  prefix={<CheckOutlined />}
-                />
-              </Form.Item>
-
-              <Form.Item
-                name="username"
-                className={styles.antdFormItem}
-                rules={[
-                  {
-                    required: true,
-                    message: "Enter your full name!",
-                  },
-                ]}
-              >
-                <Input
-                  size="large"
-                  placeholder="Username"
-                  prefix={<FormOutlined />}
-                />
-              </Form.Item>
-
-              <Form.Item>
-
-                <Button
-                  block
-                  size="large"
-                  type="primary"
-                  htmlType="submit"
-                  icon={<KeyOutlined />}
-                >
-                  SIGN UP
-                </Button>
-              </Form.Item>
-            </Form>
+          <Col xs={22} xl={14} className={styles.mainColum} span={14}>
+            <Row>
+              <Col xs={0} xl={10} span={10} className={styles.leftImage}>
+                <h1>{rxState.locale[rxState.currentLocale].messages.signUp}</h1>
+              </Col>
+              <Col xs={24} xl={14} span={14} className={styles.rightContent}>
+                <UserForm onSignUp={onSignUp} />
+              </Col>
+            </Row>
           </Col>
 
-          <Col xs={2} sm={4} md={6} lg={8} xl={9} span={9} />
+          <Col xs={1} xl={5} span={5} />
         </Row>
       </div>
     </div>

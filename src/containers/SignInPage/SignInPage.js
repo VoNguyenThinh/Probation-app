@@ -2,12 +2,29 @@ import styles from "./SignInStyle.module.scss";
 
 import React from "react";
 import "antd/dist/antd.css";
-import { Form, Input, Button, Divider, Row, Col } from "antd";
+import { Form, Input, Button, Divider, Row, Col, Switch, Space } from "antd";
+
 import { UserOutlined, LockOutlined, KeyOutlined } from "@ant-design/icons";
 
 import { Link } from "react-router-dom";
 
+import { useSelector, useDispatch } from "react-redux";
+import { getLanguage } from "../../store/ReduxStore/Slice/TranlationsSlice";
+import * as rxAction from "../../store/ReduxStore/Slice/TranlationsSlice";
+import { useHistory } from "react-router-dom";
+
 function SignInPage(props) {
+  const history = useHistory();
+  const rxDispatch = useDispatch();
+  const t = useSelector(getLanguage);
+
+  const changeLocale = (value) => {
+    const locale = value ? "vn" : "en";
+
+    rxDispatch(rxAction.changeLocale(locale));
+    rxDispatch(rxAction.setSwitch(value));
+  };
+  console.log(t.currentSwitch);
   return (
     <div className="container">
       <div className="login-fomrm">
@@ -24,10 +41,14 @@ function SignInPage(props) {
             span={6}
           >
             <Divider plain>
-              <h3>LOGIN</h3>
+              <h3>{t.locale[t.currentLocale].messages.login}</h3>
             </Divider>
 
-            <Form onFinish={() => {}}>
+            <Form
+              onFinish={() => {
+                history.push("/dash-board");
+              }}
+            >
               <Form.Item
                 name="username"
                 className={styles.antdFormItem}
@@ -35,7 +56,9 @@ function SignInPage(props) {
                   {
                     required: true,
                     type: "email",
-                    message: "Invalid email format !",
+                    message: `${
+                      t.locale[t.currentLocale].messages.form_error_email
+                    }`,
                   },
                 ]}
               >
@@ -50,12 +73,19 @@ function SignInPage(props) {
                 name="password"
                 className={styles.antdFormItem}
                 rules={[
-                  { required: true, message: "Please input your password!" },
+                  {
+                    required: true,
+                    message: `${
+                      t.locale[t.currentLocale].messages.form_error_password
+                    }`,
+                  },
                 ]}
               >
                 <Input.Password
                   size="large"
-                  placeholder="Password"
+                  placeholder={
+                    t.locale[t.currentLocale].messages.form_holder_pasword
+                  }
                   prefix={<LockOutlined />}
                 />
               </Form.Item>
@@ -68,12 +98,23 @@ function SignInPage(props) {
                   htmlType="submit"
                   icon={<KeyOutlined />}
                 >
-                  LOGIN
+                  {t.locale[t.currentLocale].messages.login}
                 </Button>
               </Form.Item>
             </Form>
+
             <Button block id={styles.btnCreatAccount} size="large" type="link">
-              <Link to={"/sign-up"}>Create an account.</Link>
+              <Space>
+                <Link to={"/sign-up"}>
+                  {t.locale[t.currentLocale].messages.lk_create_acount}
+                </Link>
+                <Switch
+                  checkedChildren="VN"
+                  unCheckedChildren="VN"
+                  onChange={changeLocale}
+                  defaultChecked={t.currentSwitch}
+                />
+              </Space>
             </Button>
           </Col>
 

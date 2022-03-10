@@ -1,17 +1,24 @@
 import React from "react";
 import { Row, Col, Form, Input, Select, Button } from "antd";
 import styles from "./UserFormStyle.module.scss";
+
+import { getLanguage } from "../../store/ReduxStore/Slice/TranlationsSlice";
+import { useSelector } from "react-redux";
 const { Option } = Select;
 
 function UserForm(props) {
-  const { CreateUser, userDetail, updateUser } = props;
+  const { CreateUser, userDetail, updateUser, onSignUp } = props;
+
   const [form] = Form.useForm();
 
   const onFinish = (values) => {
     values.userId = userDetail?.userId;
-    updateUser ? updateUser(values) : CreateUser(values);
+    updateUser && updateUser(values);
+    CreateUser && CreateUser(values);
+    onSignUp && onSignUp(values);
   };
 
+  const rxState = useSelector(getLanguage);
   return (
     <Form
       layout="vertical"
@@ -25,19 +32,45 @@ function UserForm(props) {
         <Col span={12} className={styles.FormCol12}>
           <Form.Item
             name="firstName"
-            label="First name"
-            rules={[{ required: true, message: `Please input` }]}
+            label={
+              rxState.locale[rxState.currentLocale].messages.form_firstname
+            }
+            rules={[
+              {
+                required: true,
+                message: `${
+                  rxState.locale[rxState.currentLocale].messages.form_error
+                }`,
+              },
+            ]}
           >
-            <Input placeholder="Input placehoder" />
+            <Input
+              placeholder={
+                rxState.locale[rxState.currentLocale].messages
+                  .form_holder_firstname
+              }
+            />
           </Form.Item>
         </Col>
         <Col span={12} className={styles.FormCol12}>
           <Form.Item
             name="lastName"
-            label="Last name"
-            rules={[{ required: true, message: `Please input` }]}
+            label={rxState.locale[rxState.currentLocale].messages.form_lastname}
+            rules={[
+              {
+                required: true,
+                message: `${
+                  rxState.locale[rxState.currentLocale].messages.form_error
+                }`,
+              },
+            ]}
           >
-            <Input placeholder="Input placehoder" />
+            <Input
+              placeholder={
+                rxState.locale[rxState.currentLocale].messages
+                  .form_holder_lastname
+              }
+            />
           </Form.Item>
         </Col>
       </Row>
@@ -52,20 +85,34 @@ function UserForm(props) {
               {
                 required: true,
                 type: "email",
-                message: `Invalid email format`,
+                message: `${
+                  rxState.locale[rxState.currentLocale].messages
+                    .form_error_email
+                }`,
               },
             ]}
           >
-            <Input placeholder="Input placehoder" />
+            <Input placeholder="Email" />
           </Form.Item>
         </Col>
         <Col span={12} className={styles.FormCol12}>
           <Form.Item
             name="phone"
-            label="Phone"
-            rules={[{ required: true, message: `Please input` }]}
+            label={rxState.locale[rxState.currentLocale].messages.form_phone}
+            rules={[
+              {
+                required: true,
+                message: `${
+                  rxState.locale[rxState.currentLocale].messages.form_error
+                }`,
+              },
+            ]}
           >
-            <Input placeholder="Input placehoder" />
+            <Input
+              placeholder={
+                rxState.locale[rxState.currentLocale].messages.form_holder_phone
+              }
+            />
           </Form.Item>
         </Col>
       </Row>
@@ -75,10 +122,22 @@ function UserForm(props) {
         <Col span={12} className={styles.FormCol12}>
           <Form.Item
             name="gender"
-            label="Gender"
-            rules={[{ required: true, message: `Please Select one` }]}
+            label={rxState.locale[rxState.currentLocale].messages.form_gender}
+            rules={[
+              {
+                required: true,
+                message: `${
+                  rxState.locale[rxState.currentLocale].messages.form_error
+                }`,
+              },
+            ]}
           >
-            <Select placeholder={"Gender"}>
+            <Select
+              placeholder={
+                rxState.locale[rxState.currentLocale].messages
+                  .form_holder_gender
+              }
+            >
               <Option value="Male">Male</Option>
               <Option value="Female">Female</Option>
               <Option value="Other">Other</Option>
@@ -88,10 +147,22 @@ function UserForm(props) {
         <Col span={12} className={styles.FormCol12}>
           <Form.Item
             name="address"
-            label="Address"
-            rules={[{ required: true, message: `Please input` }]}
+            label={rxState.locale[rxState.currentLocale].messages.form_address}
+            rules={[
+              {
+                required: true,
+                message: `${
+                  rxState.locale[rxState.currentLocale].messages.form_error
+                }`,
+              },
+            ]}
           >
-            <Input placeholder="Input placehoder" />
+            <Input
+              placeholder={
+                rxState.locale[rxState.currentLocale].messages
+                  .form_holder_address
+              }
+            />
           </Form.Item>
         </Col>
       </Row>
@@ -101,10 +172,22 @@ function UserForm(props) {
         <Col span={24} className={styles.FormCol12}>
           <Form.Item
             name="password"
-            label="Password"
-            rules={[{ required: true, message: `Please input` }]}
+            label={rxState.locale[rxState.currentLocale].messages.form_password}
+            rules={[
+              {
+                required: true,
+                message: `${
+                  rxState.locale[rxState.currentLocale].messages.form_error
+                }`,
+              },
+            ]}
           >
-            <Input.Password placeholder="Input placehoder" />
+            <Input.Password
+              placeholder={
+                rxState.locale[rxState.currentLocale].messages
+                  .form_holder_pasword
+              }
+            />
           </Form.Item>
         </Col>
       </Row>
@@ -114,10 +197,21 @@ function UserForm(props) {
         <Col span={24} className={styles.FormCol12}>
           <Form.Item
             name="bio"
-            label="Bio"
-            rules={[{ required: true, message: `Please input` }]}
+            label={rxState.locale[rxState.currentLocale].messages.form_bio}
+            rules={[
+              {
+                required: true,
+                message: `${
+                  rxState.locale[rxState.currentLocale].messages.form_error
+                }`,
+              },
+            ]}
           >
-            <Input.TextArea placeholder="Input placehoder" />
+            <Input.TextArea
+              placeholder={
+                rxState.locale[rxState.currentLocale].messages.form_holder_bio
+              }
+            />
           </Form.Item>
         </Col>
       </Row>
@@ -127,14 +221,20 @@ function UserForm(props) {
           <Col span={12} className={styles.FormCol12}>
             <Form.Item>
               <Button htmlType="submit" type="primary" block>
-                SAVE
+                {
+                  rxState.locale[rxState.currentLocale].messages
+                    .form_button_save
+                }
               </Button>
             </Form.Item>
           </Col>
           <Col span={12} className={styles.FormCol12}>
             <Form.Item>
               <Button htmlType="reset" type="danger" block>
-                CANCEL
+                {
+                  rxState.locale[rxState.currentLocale].messages
+                    .form_button_cancel
+                }
               </Button>
             </Form.Item>
           </Col>
@@ -144,14 +244,20 @@ function UserForm(props) {
           <Col span={12} className={styles.FormCol12}>
             <Form.Item>
               <Button htmlType="submit" type="primary" block>
-                Edit
+                {
+                  rxState.locale[rxState.currentLocale].messages
+                    .form_button_edit
+                }
               </Button>
             </Form.Item>
           </Col>
           <Col span={12} className={styles.FormCol12}>
             <Form.Item>
               <Button htmlType="reset" type="danger" block>
-                CANCEL
+                {
+                  rxState.locale[rxState.currentLocale].messages
+                    .form_button_cancel
+                }
               </Button>
             </Form.Item>
           </Col>

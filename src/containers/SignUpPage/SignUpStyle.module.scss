@@ -1,15 +1,15 @@
 //Mobile Stytle
 @media only screen and (max-width: 900px) {
   .mainRow {
-    height: 740px;
+    height: 100vh;
   }
   .mainColum {
     background: "white";
-    padding: 20px;
+    padding: 10px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     border-radius: 7px;
   }
-    .antdFormItem{
+  .antdFormItem {
     margin-bottom: 15px;
   }
 }
@@ -18,14 +18,32 @@
 @media only screen and (min-width: 740px) {
   .mainColum {
     background: "white";
-    padding: 30px;
+    padding: 0px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    border-radius: 7px;
   }
   .mainRow {
     height: 900px;
   }
-  .antdFormItem{
+  .antdFormItem {
     margin-bottom: 20px;
+  }
+  .leftContent {
+    padding: 1px;
+  }
+  .leftImage {
+    padding: 30px;
+    background: linear-gradient(to right, #7f7fd5, #86a8e7, #91eae4);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    h1 {
+      color: #fff;
+    }
+  }
+  .rightContent {
+    padding: 20px;
   }
 }

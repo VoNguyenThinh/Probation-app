@@ -7,11 +7,18 @@ import styles from "./Table.module.scss";
 
 import { useSelector, useDispatch } from "react-redux";
 import { getUserState } from "../../store/ReduxStore/Slice/UserSlice";
+
+import { getLanguage } from "../../store/ReduxStore/Slice/TranlationsSlice";
+
 import * as rxAction from "../../store/ReduxStore/Slice/UserSlice";
 
 function TableContent(props) {
   const rxState = useSelector(getUserState);
+
+  const rxStateLocale = useSelector(getLanguage);
+
   const data = rxState.listUser;
+
   const rxDispatch = useDispatch();
 
   const handleDelete = (key) => {
@@ -20,7 +27,10 @@ function TableContent(props) {
 
   const columns = [
     {
-      title: "Name",
+      title: `${
+        rxStateLocale.locale[rxStateLocale.currentLocale].messages
+          .compo_table_col_name
+      }`,
       dataIndex: "lastName",
       key: "lastName",
     },
@@ -30,17 +40,26 @@ function TableContent(props) {
       key: "email",
     },
     {
-      title: "Phone",
+      title: `${
+        rxStateLocale.locale[rxStateLocale.currentLocale].messages
+          .compo_table_col_phone
+      }`,
       dataIndex: "phone",
       key: "phone",
     },
     {
-      title: "Gender",
+      title: `${
+        rxStateLocale.locale[rxStateLocale.currentLocale].messages
+          .compo_table_col_gender
+      }`,
       dataIndex: "gender",
       key: "gender",
     },
     {
-      title: "Action",
+      title: `${
+        rxStateLocale.locale[rxStateLocale.currentLocale].messages
+          .compo_table_col_action
+      }`,
       width: "20%",
       align: "center",
       key: "action",
@@ -50,20 +69,36 @@ function TableContent(props) {
             <Space>
               <Link to={`/view-detail/${record.userId}`}>
                 <Button icon={<EditOutlined />} type="primary">
-                  Edit &nbsp; &nbsp;
+                  {
+                    rxStateLocale.locale[rxStateLocale.currentLocale].messages
+                      .compo_table_btn_edit
+                  }
+                  &nbsp; &nbsp;
                 </Button>
               </Link>
 
               <Popconfirm
-                title="Delete user?"
+                title={
+                  rxStateLocale.locale[rxStateLocale.currentLocale].messages
+                    .db_confirm_delete
+                }
                 onConfirm={() => {
                   handleDelete(record);
                 }}
-                okText="Yes"
-                cancelText="No"
+                okText={
+                  rxStateLocale.locale[rxStateLocale.currentLocale].messages
+                    .db_confirm_delete_okText
+                }
+                cancelText={
+                  rxStateLocale.locale[rxStateLocale.currentLocale].messages
+                    .db_confirm_delete_cancelText
+                }
               >
                 <Button icon={<DeleteOutlined />} type="danger">
-                  Delete
+                  {
+                    rxStateLocale.locale[rxStateLocale.currentLocale].messages
+                      .compo_table_btn_delete
+                  }
                 </Button>
               </Popconfirm>
             </Space>
@@ -81,7 +116,12 @@ function TableContent(props) {
 
         <Col span={22} className={styles.mainColContent}>
           <div className={styles.mainTable_title}>
-            <h1>LIST OF USER</h1>
+            <h1>
+              {
+                rxStateLocale.locale[rxStateLocale.currentLocale].messages
+                  .compo_table_listUser
+              }
+            </h1>
           </div>
           <div className={styles.mainTableContent}>
             <Table
@@ -101,16 +141,23 @@ function TableContent(props) {
       <Row className={styles.TableContent_Mobile}>
         <Col span={24} className={styles.mainColContent}>
           <div className={styles.mainTable_title}>
-            <h1>LIST OF USER</h1>
+            <h1>
+              {
+                rxStateLocale.locale[rxStateLocale.currentLocale].messages
+                  .compo_table_listUser
+              }
+            </h1>
           </div>
 
           <div className={styles.mainTableContent}>
-            <Table
-              columns={columns}
-              dataSource={data}
-              pagination={false}
-              size="small"
-            />
+            <div className={styles.tableContentReposive}>
+              <Table
+                columns={columns}
+                dataSource={data}
+                pagination={false}
+                size="small"
+              />
+            </div>
           </div>
         </Col>
       </Row>

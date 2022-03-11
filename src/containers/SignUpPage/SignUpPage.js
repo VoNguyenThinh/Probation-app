@@ -2,9 +2,9 @@ import styles from "./SignUpStyle.module.scss";
 
 import React from "react";
 
-import { useHistory } from "react-router-dom";
-
 import "antd/dist/antd.css";
+
+import { useHistory } from "react-router-dom";
 
 import { Row, Col, Divider } from "antd";
 
@@ -19,6 +19,8 @@ import * as rxActions from "../../store/ReduxStore/Slice/UserSlice";
 import { getLanguage } from "../../store/ReduxStore/Slice/TranlationsSlice";
 
 import UserForm from "../../utils/Form/UserForm";
+
+import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
 
 function SignUpPage(props) {
   const rxDispath = useDispatch();
@@ -36,19 +38,42 @@ function SignUpPage(props) {
 
     history.push("/dash-board");
   };
-
+  const size = useBreakpoint();
+  console.log(size);
   return (
     <div className="container">
       <div className="login-fomrm">
         <Row align="middle" className={styles.mainRow}>
-          <Col xs={1} xl={5} span={5} />
+          <Col xs={1} sm={1} md={1} xl={5} span={5} />
 
-          <Col xs={22} xl={14} className={styles.mainColum} span={14}>
-            <Row>
-              <Col xs={0} xl={10} span={10} className={styles.leftImage}>
+          <Col
+            xs={22}
+            sm={22}
+            md={22}
+            xl={14}
+            className={styles.mainColum}
+            span={14}
+          >
+            <Row align="middle">
+              <Col
+                xs={0}
+                sm={0}
+                md={0}
+                lg={0}
+                xl={10}
+                className={styles.leftImage}
+                align="middle"
+              >
                 <h1>{rxState.locale[rxState.currentLocale].messages.signUp}</h1>
               </Col>
-              <Col xs={24} xl={14} span={14} className={styles.rightContent}>
+              <Col
+                xs={24}
+                sm={24}
+                md={24}
+                lg={24}
+                xl={14}
+                className={styles.rightContent}
+              >
                 <Divider className={styles.mobileTitle}>SIGN UP</Divider>
 
                 <UserForm onSignUp={onSignUp} />
@@ -56,7 +81,7 @@ function SignUpPage(props) {
             </Row>
           </Col>
 
-          <Col xs={1} xl={5} span={5} />
+          <Col xs={1} sm={1} md={1} xl={5} span={5} />
         </Row>
       </div>
     </div>

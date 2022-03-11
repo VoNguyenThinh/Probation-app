@@ -1,10 +1,20 @@
-import { Layout, Menu, Dropdown, Switch, Space } from "antd";
+import { Layout, Menu, Dropdown, Switch, Space, Button } from "antd";
+
+import _ from "lodash";
+
+import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
 
 import styles from "./DashBoardStyle.module.scss";
 
 import "./index.scss";
 
-import { UserOutlined, VideoCameraOutlined } from "@ant-design/icons";
+import {
+  UserOutlined,
+  VideoCameraOutlined,
+  SettingOutlined,
+  DownOutlined,
+  SwapOutlined,
+} from "@ant-design/icons";
 
 import { Link } from "react-router-dom";
 
@@ -31,6 +41,29 @@ function DashBoard({ children }) {
       </Link>
     </Menu>
   );
+
+  const responsiveMenu = (
+    <Menu>
+      <Link to={"/"}>
+        <Menu.Item key="1" icon={<UserOutlined />}>
+          User Profile
+        </Menu.Item>
+      </Link>
+      <Menu.Item key="1" icon={<SwapOutlined />}>
+        <Switch
+          checkedChildren="VN"
+          unCheckedChildren="VN"
+          onChange={changeLocale}
+          defaultChecked={rxState.currentSwitch}
+        />
+      </Menu.Item>
+    </Menu>
+  );
+
+  const size = useBreakpoint();
+  const breakPoint = _.filter(Object.values(size), (i) => {
+    return i === true;
+  }).length;
 
   return (
     <>
@@ -79,17 +112,23 @@ function DashBoard({ children }) {
 
         <Layout>
           <Header className={styles.heading}>
-            <Space>
-              <Dropdown.Button overlay={menu} icon={<UserOutlined />}>
-                Dropdown
-              </Dropdown.Button>
-              <Switch
-                checkedChildren="VN"
-                unCheckedChildren="VN"
-                onChange={changeLocale}
-                defaultChecked={rxState.currentSwitch}
-              />
-            </Space>
+            {breakPoint !== 5 ? (
+              <Dropdown overlay={responsiveMenu}>
+                <Button icon={<SettingOutlined />}></Button>
+              </Dropdown>
+            ) : (
+              <Space>
+                <Dropdown.Button overlay={menu} icon={<SettingOutlined />}>
+                  Dropdown
+                </Dropdown.Button>
+                <Switch
+                  checkedChildren="VN"
+                  unCheckedChildren="VN"
+                  onChange={changeLocale}
+                  defaultChecked={rxState.currentSwitch}
+                />
+              </Space>
+            )}
           </Header>
           <Content style={{ margin: "24px 16px 0" }}>
             <div className={styles.dbContent} style={{ background: "#fff" }}>

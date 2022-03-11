@@ -1,15 +1,55 @@
 // Style for Mobile
-@media only screen and (max-width: 900px) {
-  .TableContent_PC {
-    display: none;
-  }
-
+@media only screen and (max-width: 767px) {
   .mainColContent {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 
+    padding: 5px;
+    .mainTable_title {
+      background-color: #fff;
+      min-height: 100px;
+      border-radius: 8px;
+      background-image: url("https://images.squarespace-cdn.com/content/v1/57e286d29f74569a6b997733/1567697014451-Y7RODCYOPATUROAGLP8J/abstract_polygons_wallpaper_by_cratemuncher-d6ys3ge.png?format=2500w");
+      background-repeat: no-repeat;
+      width: 100%;
+      text-align: center;
+      h1 {
+        font-size: 22px;
+        color: #fff;
+        line-height: 100px;
+      }
+    }
+    .mainTableContent {
+      margin-top: -20px;
+      width: 99%;
+      background-color: #fff;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+      Table {
+        th {
+          min-width: 130px !important;
+        }
+      }
+    }
+    .tableContentReposive {
+      width: 100% !important;
+      max-height: 525px;
+
+      overflow: scroll !important;
+    }
+  }
+}
+
+// For Tablet
+@media only screen and (min-width: 767px) and (max-width: 1024px) {
+  .mainColContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     padding: 5px;
     .mainTable_title {
       background-color: #fff;
@@ -41,23 +81,19 @@
     .tableContentReposive {
       width: 100% !important;
       overflow: scroll !important;
-      // overflow-x: hidden !important;
+      overflow-x: hidden !important;
     }
   }
 }
 
 // Style for PC
-@media only screen and (min-width: 740px) {
-  .TableContent_Mobile {
-    display: none;
-  }
+@media only screen and (min-width: 1024px) {
   .mainColContent {
     padding: 10px 30px 30px 30px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
     .mainTable_title {
       background-color: #fff;
       min-height: 200px;

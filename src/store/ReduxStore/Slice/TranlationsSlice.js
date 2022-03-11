@@ -30,6 +30,9 @@ const initialState = {
         form_address: "Address",
         form_password: "Password",
         form_bio: "Bio",
+        form_select_option_1: "Male",
+        form_select_option_2: "Female",
+        form_select_option_3: "Other",
         form_button_save: "SAVE",
         form_button_cancel: "CANCEL",
         form_button_edit: "EDIT",
@@ -79,6 +82,11 @@ const initialState = {
         form_address: "Địa chỉ",
         form_password: "Mật khẩu",
         form_bio: "Về cá nhân",
+
+        form_select_option_1: "Nam ",
+        form_select_option_2: "Nữ",
+        form_select_option_3: "Khác",
+
         form_button_save: "LƯU",
         form_button_cancel: "HỦY",
         form_button_edit: "CHỈNH SỬA",

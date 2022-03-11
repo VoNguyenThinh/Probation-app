@@ -1,13 +1,7 @@
 import React from "react";
 import styles from "./UserProfile_Style.module.scss";
-import { Image, Card, Row, Col } from "antd";
-import {
-  UserOutlined,
-  SyncOutlined,
-  PushpinOutlined,
-  PhoneOutlined,
-  MailOutlined,
-} from "@ant-design/icons";
+import { Image, Row, Col } from "antd";
+
 import _ from "lodash";
 import UserForm from "../Form/UserForm";
 import CreateUSer from "../CreateUsers/CreateUser";
@@ -50,7 +44,6 @@ function UserProfile(props) {
                     width={170}
                     src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
                   />
-                  {/* Username */}
                   <div className={styles.UserPro_name}>
                     <h1>
                       {userDetail.lastName} {userDetail.firstName}

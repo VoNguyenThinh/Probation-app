@@ -138,9 +138,24 @@ function UserForm(props) {
                   .form_holder_gender
               }
             >
-              <Option value="Male">Male</Option>
-              <Option value="Female">Female</Option>
-              <Option value="Other">Other</Option>
+              <Option value="Male">
+                {
+                  rxState.locale[rxState.currentLocale].messages
+                    .form_select_option_1
+                }
+              </Option>
+              <Option value="Female">
+                {
+                  rxState.locale[rxState.currentLocale].messages
+                    .form_select_option_2
+                }
+              </Option>
+              <Option value="Other">
+                {
+                  rxState.locale[rxState.currentLocale].messages
+                    .form_select_option_3
+                }
+              </Option>
             </Select>
           </Form.Item>
         </Col>

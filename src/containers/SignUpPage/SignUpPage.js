@@ -6,7 +6,7 @@ import { useHistory } from "react-router-dom";
 
 import "antd/dist/antd.css";
 
-import { Row, Col } from "antd";
+import { Row, Col, Divider } from "antd";
 
 import { v4 as uuidv4 } from "uuid";
 
@@ -49,6 +49,8 @@ function SignUpPage(props) {
                 <h1>{rxState.locale[rxState.currentLocale].messages.signUp}</h1>
               </Col>
               <Col xs={24} xl={14} span={14} className={styles.rightContent}>
+                <Divider className={styles.mobileTitle}>SIGN UP</Divider>
+
                 <UserForm onSignUp={onSignUp} />
               </Col>
             </Row>

@@ -1,6 +1,6 @@
 import { Layout, Menu, Dropdown, Switch, Space, Button } from "antd";
 
-import _ from "lodash";
+import { filter } from "lodash";
 
 import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
 
@@ -12,7 +12,6 @@ import {
   UserOutlined,
   VideoCameraOutlined,
   SettingOutlined,
-  DownOutlined,
   SwapOutlined,
 } from "@ant-design/icons";
 
@@ -61,7 +60,8 @@ function DashBoard({ children }) {
   );
 
   const size = useBreakpoint();
-  const breakPoint = _.filter(Object.values(size), (i) => {
+
+  const breakPoint = filter(Object.values(size), (i) => {
     return i === true;
   }).length;
 
@@ -118,7 +118,7 @@ function DashBoard({ children }) {
               </Dropdown>
             ) : (
               <Space>
-                <Dropdown.Button overlay={menu} icon={<SettingOutlined />}>
+                <Dropdown.Button overlay={menu} icon={<UserOutlined />}>
                   Dropdown
                 </Dropdown.Button>
                 <Switch

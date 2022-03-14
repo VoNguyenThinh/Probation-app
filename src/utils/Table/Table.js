@@ -1,14 +1,18 @@
 import React from "react";
-import { Table, Row, Col, Button, Popconfirm, message, Space } from "antd";
+
+import { Table, Row, Col, Button, Popconfirm, Space } from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import styles from "./Table.module.scss";
+
 import { useSelector, useDispatch } from "react-redux";
 import { getUserState } from "../../store/ReduxStore/Slice/UserSlice";
 import { getLanguage } from "../../store/ReduxStore/Slice/TranlationsSlice";
 import * as rxAction from "../../store/ReduxStore/Slice/UserSlice";
 import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
-import _ from "lodash";
+
+import { filter } from "lodash";
+
 function TableContent(props) {
   const rxState = useSelector(getUserState);
 
@@ -51,6 +55,11 @@ function TableContent(props) {
       }`,
       dataIndex: "gender",
       key: "gender",
+      render: (text) => {
+        return rxStateLocale.locale[rxStateLocale.currentLocale].messages[
+          `form_select_${text.toLowerCase()}`
+        ];
+      },
     },
     {
       title: `${
@@ -107,7 +116,7 @@ function TableContent(props) {
 
   const size = useBreakpoint();
 
-  const breakPoint = _.filter(Object.values(size), (i) => {
+  const breakPoint = filter(Object.values(size), (i) => {
     return i === true;
   }).length;
 
@@ -144,7 +153,6 @@ function TableContent(props) {
       )}
 
       {/* For Mobile */}
-
       {breakPoint === 1 && (
         <Row className={styles.TableContent_Mobile}>
           <Col span={24} className={styles.mainColContent}>
@@ -172,7 +180,6 @@ function TableContent(props) {
       )}
 
       {/* For Tablet */}
-
       {breakPoint === 2 && (
         <Row className={styles.TableContent_Tablet}>
           <Col md={0} span={0} />

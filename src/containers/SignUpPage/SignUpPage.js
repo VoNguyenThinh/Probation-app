@@ -1,26 +1,14 @@
+import React from "react";
 import styles from "./SignUpStyle.module.scss";
 
-import React from "react";
-
-import "antd/dist/antd.css";
-
 import { useHistory } from "react-router-dom";
-
 import { Row, Col, Divider } from "antd";
-
 import { v4 as uuidv4 } from "uuid";
 
-import _ from "lodash";
-
 import { useSelector, useDispatch } from "react-redux";
-
 import * as rxActions from "../../store/ReduxStore/Slice/UserSlice";
-
 import { getLanguage } from "../../store/ReduxStore/Slice/TranlationsSlice";
-
 import UserForm from "../../utils/Form/UserForm";
-
-import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
 
 function SignUpPage(props) {
   const rxDispath = useDispatch();
@@ -29,8 +17,6 @@ function SignUpPage(props) {
 
   const history = useHistory();
 
-  console.log(rxState.locale["en"].messages.signUp);
-
   const onSignUp = (values) => {
     values.userId = uuidv4();
 
@@ -38,8 +24,6 @@ function SignUpPage(props) {
 
     history.push("/dash-board");
   };
-  const size = useBreakpoint();
-  console.log(size);
   return (
     <div className="container">
       <div className="login-fomrm">

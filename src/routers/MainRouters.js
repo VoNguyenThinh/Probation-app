@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import SingnInPage from "../containers/SignInPage/SignInPage";
 import SingnUpPage from "../containers/SignUpPage/SignUpPage";
@@ -13,29 +13,17 @@ function MainRouters() {
     <>
       <Router>
         <Switch>
-          <Route exact path="/sign-up">
-            <SingnUpPage />
-          </Route>
+          <Route exact component={SingnUpPage} path="/sign-up" />
 
-          <Route exact path="/">
-            <SingnInPage />
-          </Route>
+          <Route exact component={SingnInPage} path="/" />
+
           <DashBoard>
-            <Switch>
-              <Route path="/dash-board">
-                <TableContent />
-              </Route>
+            <Route component={TableContent} exact path="/dash-board" />
 
-              <Route path="/create-user">
-                <CreateUser />
-              </Route>
+            <Route component={CreateUser} exact path="/create-user" />
 
-              <Route path="/view-detail/:id">
-                <UserProfile />
-              </Route>
-            </Switch>
+            <Route component={UserProfile} exact path="/view-detail/:id" />
           </DashBoard>
-          {/* ========================================= */}
         </Switch>
       </Router>
     </>

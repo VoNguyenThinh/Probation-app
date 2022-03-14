@@ -1,8 +1,8 @@
 import React from "react";
-import styles from "./UserProfile_Style.module.scss";
 import { Image, Row, Col } from "antd";
-import _ from "lodash";
+import { find, filter } from "lodash";
 
+import styles from "./UserProfile_Style.module.scss";
 import UserForm from "../Form/UserForm";
 import CreateUSer from "../CreateUsers/CreateUser";
 import { useParams } from "react-router-dom";
@@ -20,7 +20,7 @@ function UserProfile(props) {
 
   const rxStateLocale = useSelector(getLanguage);
 
-  const userDetail = _.find(rxState.listUser, { userId: id });
+  const userDetail = find(rxState.listUser, { userId: id });
 
   const rxDispatch = useDispatch();
 
@@ -30,13 +30,10 @@ function UserProfile(props) {
   };
 
   const size = useBreakpoint();
-  const breakPoint = _.filter(Object.values(size), (i) => {
+
+  const breakPoint = filter(Object.values(size), (i) => {
     return i === true;
   }).length;
-
-  {
-    /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-  }
 
   return (
     <>
@@ -89,7 +86,7 @@ function UserProfile(props) {
         </div>
       )}
 
-      {/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */}
+      {/* For Mobile */}
       {breakPoint === 1 && (
         <div className={styles.User_Profile_Mobile}>
           <CreateUSer
@@ -102,7 +99,6 @@ function UserProfile(props) {
           />
         </div>
       )}
-      {/* For Mobile */}
     </>
   );
 }

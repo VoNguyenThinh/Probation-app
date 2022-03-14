@@ -7,27 +7,24 @@ import { useSelector } from "react-redux";
 const { Option } = Select;
 
 function UserForm(props) {
-  const { CreateUser, userDetail, updateUser, onSignUp } = props;
+  const { userDetail, onFinish, onSignUp } = props;
 
   const [form] = Form.useForm();
 
-  const onFinish = (values) => {
-    values.userId = userDetail?.userId;
-    updateUser && updateUser(values);
-    CreateUser && CreateUser(values);
+  const onFinished = (values) => {
     onSignUp && onSignUp(values);
+    onFinish && onFinish(values);
   };
 
   const rxState = useSelector(getLanguage);
+
   return (
     <Form
       layout="vertical"
-      onFinish={onFinish}
+      onFinish={onFinished}
       form={form}
       initialValues={userDetail}
     >
-      {/* 2 Colums */}
-
       <Row>
         <Col span={12} className={styles.FormCol12}>
           <Form.Item
@@ -74,7 +71,6 @@ function UserForm(props) {
           </Form.Item>
         </Col>
       </Row>
-      {/* 2 Colums */}
 
       <Row>
         <Col span={12} className={styles.FormCol12}>
@@ -116,7 +112,6 @@ function UserForm(props) {
           </Form.Item>
         </Col>
       </Row>
-      {/* 2 Colums */}
 
       <Row>
         <Col span={12} className={styles.FormCol12}>
@@ -141,19 +136,19 @@ function UserForm(props) {
               <Option value="Male">
                 {
                   rxState.locale[rxState.currentLocale].messages
-                    .form_select_option_1
+                    .form_select_male
                 }
               </Option>
               <Option value="Female">
                 {
                   rxState.locale[rxState.currentLocale].messages
-                    .form_select_option_2
+                    .form_select_female
                 }
               </Option>
               <Option value="Other">
                 {
                   rxState.locale[rxState.currentLocale].messages
-                    .form_select_option_3
+                    .form_select_other
                 }
               </Option>
             </Select>
@@ -182,7 +177,6 @@ function UserForm(props) {
         </Col>
       </Row>
 
-      {/* 1Colum */}
       <Row>
         <Col span={24} className={styles.FormCol12}>
           <Form.Item
@@ -207,7 +201,6 @@ function UserForm(props) {
         </Col>
       </Row>
 
-      {/* 2 Colums */}
       <Row>
         <Col span={24} className={styles.FormCol12}>
           <Form.Item

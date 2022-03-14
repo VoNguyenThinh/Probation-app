@@ -1,9 +1,7 @@
-import styles from "./SignInStyle.module.scss";
-
 import React from "react";
-import "antd/dist/antd.css";
-import { Form, Input, Button, Divider, Row, Col, Switch, Space } from "antd";
 
+import styles from "./SignInStyle.module.scss";
+import { Form, Input, Button, Divider, Row, Col, Switch, Space } from "antd";
 import { UserOutlined, LockOutlined, KeyOutlined } from "@ant-design/icons";
 
 import { Link } from "react-router-dom";
@@ -24,7 +22,7 @@ function SignInPage(props) {
     rxDispatch(rxAction.changeLocale(locale));
     rxDispatch(rxAction.setSwitch(value));
   };
-  console.log(t.currentSwitch);
+
   return (
     <div className="container">
       <div className="login-fomrm">

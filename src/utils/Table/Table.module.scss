@@ -1,7 +1,7 @@
 // Style for Mobile
 @media only screen and (max-width: 767px) {
   .mainColContent {
-    display: flex;
+    display: flex !important;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -46,7 +46,7 @@
 // For Tablet
 @media only screen and (min-width: 767px) and (max-width: 1024px) {
   .mainColContent {
-    display: flex;
+    display: flex !important;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -90,7 +90,7 @@
 @media only screen and (min-width: 1024px) {
   .mainColContent {
     padding: 10px 30px 30px 30px;
-    display: flex;
+    display: flex !important;
     flex-direction: column;
     justify-content: center;
     align-items: center;

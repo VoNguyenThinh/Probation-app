@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./CreateUserStyle.module.scss";
 import Form from "../Form/UserForm";
 import { v4 as uuidv4 } from "uuid";
-import _ from "lodash";
+import { filter } from "lodash";
 import { Row, Col, notification } from "antd";
 
 import { useSelector, useDispatch } from "react-redux";
@@ -24,15 +24,20 @@ function CreateUser(props) {
     });
   };
 
-  const CreateUser = (values) => {
-    values.userId = uuidv4();
-    rxDispath(rxAction.createUser(values));
-    openNotificationWithIcon();
+  const createUser = (values) => {
+    if (updateUser) {
+      updateUser(values);
+      openNotificationWithIcon();
+    } else {
+      values.userId = uuidv4();
+      rxDispath(rxAction.createUser(values));
+      openNotificationWithIcon();
+    }
   };
 
   const size = useBreakpoint();
 
-  const breakPoint = _.filter(Object.values(size), (i) => {
+  const breakPoint = filter(Object.values(size), (i) => {
     return i === true;
   }).length;
 
@@ -55,7 +60,7 @@ function CreateUser(props) {
                 </h1>
               </div>
               <div className={styles.mainCreateUser_content}>
-                <Form CreateUser={CreateUser} />
+                <Form onFinish={createUser} userDetail={userDetail} />
               </div>
             </Col>
             <Col span={3} />
@@ -63,7 +68,7 @@ function CreateUser(props) {
         </div>
       )}
 
-      {/* ========================================For Tablet======================================== */}
+      {/* ========================================For Tablet==================================== */}
       {breakPoint === 2 && (
         <div className={styles.CreateUser_Tablet}>
           <Row>
@@ -79,18 +84,14 @@ function CreateUser(props) {
                 </h1>
               </div>
               <div className={styles.mainCreateUser_content}>
-                <Form
-                  CreateUser={CreateUser}
-                  userDetail={userDetail}
-                  updateUser={updateUser}
-                />
+                <Form onFinish={createUser} userDetail={userDetail} />
               </div>
             </Col>
           </Row>
         </div>
       )}
 
-      {/* ========================================For Mobile======================================== */}
+      {/* ========================================For Mobile==================================== */}
       {breakPoint === 1 && (
         <div className={styles.CreateUser_Mobile}>
           <Row>
@@ -107,9 +108,9 @@ function CreateUser(props) {
               </div>
               <div className={styles.mainCreateUser_content}>
                 <Form
-                  CreateUser={CreateUser}
+                  createUser={createUser}
                   userDetail={userDetail}
-                  updateUser={updateUser}
+                  onFinish={updateUser}
                 />
               </div>
             </Col>

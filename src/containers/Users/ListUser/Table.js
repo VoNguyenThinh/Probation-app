@@ -6,9 +6,9 @@ import { Link } from "react-router-dom";
 import styles from "./Table.module.scss";
 
 import { useSelector, useDispatch } from "react-redux";
-import { getUserState } from "../../store/ReduxStore/Slice/UserSlice";
-import { getLanguage } from "../../store/ReduxStore/Slice/TranlationsSlice";
-import * as rxAction from "../../store/ReduxStore/Slice/UserSlice";
+import { getUserState } from "../../../store/ReduxStore/Slice/UserSlice";
+import { getLanguage } from "../../../store/ReduxStore/Slice/TranlationsSlice";
+import * as rxAction from "../../../store/ReduxStore/Slice/UserSlice";
 import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
 
 import { filter } from "lodash";
@@ -122,94 +122,30 @@ function TableContent(props) {
 
   return (
     <>
-      {/* For PC */}
-      {breakPoint === 5 && (
-        <Row className={styles.TableContent_PC}>
-          <Col lg={0} span={1} />
-
-          <Col lg={24} span={22} className={styles.mainColContent}>
-            <div className={styles.mainTable_title}>
-              <h1>
-                {
-                  rxStateLocale.locale[rxStateLocale.currentLocale].messages
-                    .compo_table_listUser
-                }
-              </h1>
-            </div>
-            <div className={styles.mainTableContent}>
+      <Row justify="center" className={styles.TableContent_PC}>
+        <Col md={23} lg={24} className={styles.mainColContent}>
+          <div className={styles.mainTable_title}>
+            <h1>
+              {
+                rxStateLocale.locale[rxStateLocale.currentLocale].messages
+                  .compo_table_listUser
+              }
+            </h1>
+          </div>
+          <div className={styles.mainTableContent}>
+            <div className={styles.tableContentReposive}>
               <Table
                 columns={columns}
                 dataSource={data}
                 pagination={false}
                 bordered
+                size={breakPoint === 1 ? "small" : "middle"}
                 rowKey={"userId"}
-                scroll={{ y: 560 }}
               />
             </div>
-          </Col>
-
-          <Col lg={0} span={1} />
-        </Row>
-      )}
-
-      {/* For Mobile */}
-      {breakPoint === 1 && (
-        <Row className={styles.TableContent_Mobile}>
-          <Col span={24} className={styles.mainColContent}>
-            <div className={styles.mainTable_title}>
-              <h1>
-                {
-                  rxStateLocale.locale[rxStateLocale.currentLocale].messages
-                    .compo_table_listUser
-                }
-              </h1>
-            </div>
-            <div className={styles.mainTableContent}>
-              <div className={styles.tableContentReposive}>
-                <Table
-                  columns={columns}
-                  dataSource={data}
-                  pagination={false}
-                  size="small"
-                  bordered
-                />
-              </div>
-            </div>
-          </Col>
-        </Row>
-      )}
-
-      {/* For Tablet */}
-      {breakPoint === 2 && (
-        <Row className={styles.TableContent_Tablet}>
-          <Col md={0} span={0} />
-
-          <Col md={24} span={24} className={styles.mainColContent}>
-            <div className={styles.mainTable_title}>
-              <h1>
-                {
-                  rxStateLocale.locale[rxStateLocale.currentLocale].messages
-                    .compo_table_listUser
-                }
-              </h1>
-            </div>
-            <div className={styles.mainTableContent}>
-              <div className={styles.tableContentReposive}>
-                <Table
-                  columns={columns}
-                  dataSource={data}
-                  pagination={false}
-                  size="small"
-                  scroll={{ x: 150, y: 800 }}
-                  bordered
-                />
-              </div>
-            </div>
-          </Col>
-
-          <Col md={0} span={0} />
-        </Row>
-      )}
+          </div>
+        </Col>
+      </Row>
     </>
   );
 }

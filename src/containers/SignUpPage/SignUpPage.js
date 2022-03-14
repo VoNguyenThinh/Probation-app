@@ -8,7 +8,7 @@ import { v4 as uuidv4 } from "uuid";
 import { useSelector, useDispatch } from "react-redux";
 import * as rxActions from "../../store/ReduxStore/Slice/UserSlice";
 import { getLanguage } from "../../store/ReduxStore/Slice/TranlationsSlice";
-import UserForm from "../../utils/Form/UserForm";
+import UserForm from "../../components/UltilsForm/UserForm";
 
 function SignUpPage(props) {
   const rxDispath = useDispatch();
@@ -18,6 +18,7 @@ function SignUpPage(props) {
   const history = useHistory();
 
   const onSignUp = (values) => {
+    console.log(values);
     values.userId = uuidv4();
 
     rxDispath(rxActions.createUser(values));
@@ -60,7 +61,7 @@ function SignUpPage(props) {
               >
                 <Divider className={styles.mobileTitle}>SIGN UP</Divider>
 
-                <UserForm onSignUp={onSignUp} />
+                <UserForm onFinish={onSignUp} />
               </Col>
             </Row>
           </Col>

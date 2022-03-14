@@ -3,7 +3,7 @@ import React from "react";
 import styles from "./SignInStyle.module.scss";
 import { Form, Input, Button, Divider, Row, Col, Switch, Space } from "antd";
 import { UserOutlined, LockOutlined, KeyOutlined } from "@ant-design/icons";
-
+import { v4 as uuid4 } from "uuid";
 import { Link } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
@@ -16,6 +16,11 @@ function SignInPage(props) {
   const rxDispatch = useDispatch();
   const t = useSelector(getLanguage);
 
+  const onFinish = () => {
+    localStorage.setItem("token", uuid4());
+    history.push("/dash-board");
+  };
+
   const changeLocale = (value) => {
     const locale = value ? "vn" : "en";
 
@@ -26,9 +31,7 @@ function SignInPage(props) {
   return (
     <div className="container">
       <div className="login-fomrm">
-        <Row align="middle" className={styles.mainRow}>
-          <Col xs={2} sm={4} md={6} lg={8} xl={9} span={9} />
-
+        <Row align="middle" justify="center" className={styles.mainRow}>
           <Col
             className={styles.mainColum}
             xs={20}
@@ -42,11 +45,7 @@ function SignInPage(props) {
               <h3>{t.locale[t.currentLocale].messages.login}</h3>
             </Divider>
 
-            <Form
-              onFinish={() => {
-                history.push("/dash-board");
-              }}
-            >
+            <Form onFinish={onFinish}>
               <Form.Item
                 name="username"
                 className={styles.antdFormItem}
@@ -115,8 +114,6 @@ function SignInPage(props) {
               </Space>
             </Button>
           </Col>
-
-          <Col xs={2} sm={4} md={6} lg={8} xl={9} span={9} />
         </Row>
       </div>
     </div>

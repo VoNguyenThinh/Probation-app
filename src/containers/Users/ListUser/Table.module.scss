@@ -37,7 +37,6 @@
     .tableContentReposive {
       width: 100% !important;
       max-height: 525px;
-
       overflow: scroll !important;
     }
   }
@@ -67,7 +66,7 @@
     }
     .mainTableContent {
       margin-top: -20px;
-      width: 99%;
+      width: 98%;
       background-color: #fff;
       padding: 15px;
       border-radius: 8px;
@@ -81,7 +80,7 @@
     .tableContentReposive {
       width: 100% !important;
       overflow: scroll !important;
-      overflow-x: hidden !important;
+      // overflow-x: hidden !important;
     }
   }
 }

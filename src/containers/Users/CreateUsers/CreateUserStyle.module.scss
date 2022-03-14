@@ -1,0 +1,103 @@
+// ==============================For PC =====================================================================
+@media only screen and (min-width: 1024px) {
+  .mainColContent {
+    min-height: 800px;
+    padding: 10px 30px 30px 30px;
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .mainCreateUser_title {
+    background-color: #fff;
+    min-height: 150px;
+    border-radius: 8px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    background-image: url("https://images.squarespace-cdn.com/content/v1/57e286d29f74569a6b997733/1567697014451-Y7RODCYOPATUROAGLP8J/abstract_polygons_wallpaper_by_cratemuncher-d6ys3ge.png?format=2500w");
+    background-repeat: no-repeat;
+    width: 100%;
+    text-align: center;
+    h1 {
+      font-size: 22px;
+      color: #fff;
+      line-height: 150px;
+    }
+  }
+  .mainCreateUser_content {
+    margin-top: -30px;
+    width: 98%;
+    background-color: #fff;
+    padding: 30px 60px 20px 60px;
+    border-radius: 8px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  }
+}
+// ==============================For Tablet =================================================================
+@media only screen and (min-width: 767px) and (max-width: 1024px) {
+  .mainColContent {
+    min-height: 800px;
+    padding: 10px 0px 30px 0px;
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .mainCreateUser_title {
+    background-color: #fff;
+    min-height: 180px;
+    border-radius: 8px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    background-image: url("https://images.squarespace-cdn.com/content/v1/57e286d29f74569a6b997733/1567697014451-Y7RODCYOPATUROAGLP8J/abstract_polygons_wallpaper_by_cratemuncher-d6ys3ge.png?format=2500w");
+    background-repeat: no-repeat;
+    width: 100%;
+    text-align: center;
+    h1 {
+      font-size: 22px;
+      color: #fff;
+      line-height: 150px;
+    }
+  }
+  .mainCreateUser_content {
+    margin-top: -40px;
+    width: 98%;
+    background-color: #fff;
+    padding: 30px;
+    padding-bottom: 10px;
+    border-radius: 8px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  }
+}
+// ==============================For Mobile =================================================================
+@media screen and (max-width: 767px) {
+  .mainColContent {
+    top: 20px;
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .mainCreateUser_title {
+    background-color: #fff;
+    min-height: 100px;
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    background-image: url("https://images.squarespace-cdn.com/content/v1/57e286d29f74569a6b997733/1567697014451-Y7RODCYOPATUROAGLP8J/abstract_polygons_wallpaper_by_cratemuncher-d6ys3ge.png?format=2500w");
+    background-repeat: no-repeat;
+    width: 100%;
+    text-align: center;
+    h1 {
+      font-size: 15px;
+      color: #fff;
+      line-height: 100px;
+    }
+  }
+  .mainCreateUser_content {
+    margin-top: -15px;
+    width: 98%;
+    background-color: #fff;
+    padding: 15px 10px 0px 10px;
+    border-radius: 8px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  }
+}

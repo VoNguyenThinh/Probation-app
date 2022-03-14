@@ -7,12 +7,11 @@ import { useSelector } from "react-redux";
 const { Option } = Select;
 
 function UserForm(props) {
-  const { userDetail, onFinish, onSignUp } = props;
+  const { initialValues, onFinish } = props;
 
   const [form] = Form.useForm();
 
   const onFinished = (values) => {
-    onSignUp && onSignUp(values);
     onFinish && onFinish(values);
   };
 
@@ -23,7 +22,7 @@ function UserForm(props) {
       layout="vertical"
       onFinish={onFinished}
       form={form}
-      initialValues={userDetail}
+      initialValues={initialValues}
     >
       <Row>
         <Col span={12} className={styles.FormCol12}>
@@ -224,7 +223,7 @@ function UserForm(props) {
         </Col>
       </Row>
 
-      {!userDetail ? (
+      {!initialValues ? (
         <Row>
           <Col span={12} className={styles.FormCol12}>
             <Form.Item>

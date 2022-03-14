@@ -1,12 +1,15 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
+import { ProtectedLogin } from "./ProtectedLogin";
+import { ProtectedRoute } from "./ProtectedRoute";
+
 import SingnInPage from "../containers/SignInPage/SignInPage";
 import SingnUpPage from "../containers/SignUpPage/SignUpPage";
 import DashBoard from "../containers/DashBoard/DashBoard";
-import TableContent from "../utils/Table/Table";
-import UserProfile from "../utils/UserProfile/UserProfile";
-import CreateUser from "../utils/CreateUsers/CreateUser";
+import ListUser from "../containers/Users/ListUser/Table";
+import CreateUser from "../containers/Users/CreateUsers/CreateUser";
+import EditUser from "../containers/Users/EditUser/EditUser";
 
 function MainRouters() {
   return (
@@ -14,15 +17,18 @@ function MainRouters() {
       <Router>
         <Switch>
           <Route exact component={SingnUpPage} path="/sign-up" />
-
-          <Route exact component={SingnInPage} path="/" />
+          <ProtectedLogin exact component={SingnInPage} path="/" />
 
           <DashBoard>
-            <Route component={TableContent} exact path="/dash-board" />
+            <ProtectedRoute exact component={ListUser} path="/dash-board" />
 
-            <Route component={CreateUser} exact path="/create-user" />
+            <ProtectedRoute exact component={CreateUser} path="/create-user" />
 
-            <Route component={UserProfile} exact path="/view-detail/:id" />
+            <ProtectedRoute
+              exact
+              component={EditUser}
+              path="/view-detail/:id"
+            />
           </DashBoard>
         </Switch>
       </Router>

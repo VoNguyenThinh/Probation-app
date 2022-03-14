@@ -1,13 +1,8 @@
 import { Layout, Menu, Dropdown, Switch, Space, Button } from "antd";
-
 import { filter } from "lodash";
-
 import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
-
 import styles from "./DashBoardStyle.module.scss";
-
 import "./index.scss";
-
 import {
   UserOutlined,
   VideoCameraOutlined,
@@ -20,6 +15,7 @@ import { Link } from "react-router-dom";
 import { getLanguage } from "../../store/ReduxStore/Slice/TranlationsSlice";
 import { useSelector, useDispatch } from "react-redux";
 import * as rxAction from "../../store/ReduxStore/Slice/TranlationsSlice";
+import { useHistory } from "react-router-dom";
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -33,21 +29,29 @@ function DashBoard({ children }) {
 
   const menu = (
     <Menu>
-      <Link to={"/"}>
-        <Menu.Item key="1" icon={<UserOutlined />}>
-          User Profile
-        </Menu.Item>
-      </Link>
+      <Menu.Item
+        onClick={() => {
+          localStorage.clear();
+        }}
+        key="1"
+        icon={<UserOutlined />}
+      >
+        Sign out
+      </Menu.Item>
     </Menu>
   );
 
   const responsiveMenu = (
     <Menu>
-      <Link to={"/"}>
-        <Menu.Item key="1" icon={<UserOutlined />}>
-          User Profile
-        </Menu.Item>
-      </Link>
+      <Menu.Item
+        onClick={() => {
+          localStorage.clear();
+        }}
+        key="1"
+        icon={<UserOutlined />}
+      >
+        Sign out
+      </Menu.Item>
       <Menu.Item key="1" icon={<SwapOutlined />}>
         <Switch
           checkedChildren="VN"

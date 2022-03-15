@@ -1,59 +1,66 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./EditUser.module.scss";
 import Form from "../../../components/UltilsForm/UserForm";
-import { filter, find } from "lodash";
-import { Row, Col, notification } from "antd";
+import { Row, Col, notification, Spin } from "antd";
 
-import { useSelector, useDispatch } from "react-redux";
-import * as rxAction from "../../../store/ReduxStore/Slice/UserSlice";
+import { useSelector } from "react-redux";
 import { getLanguage } from "../../../store/ReduxStore/Slice/TranlationsSlice";
-import { getUserState } from "../../../store/ReduxStore/Slice/UserSlice";
 
-import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
 import { useParams } from "react-router-dom";
+import userAPI from "../../../Api/userAPI/userAPI";
+import { useHistory } from "react-router-dom";
+
+import { useQuery, QueryCache, useMutation } from "react-query";
 
 function EditUser(props) {
+  const queryCache = new QueryCache();
+  queryCache.clear();
+  const [initialValues, setInitialValues] = useState({});
+
   const { id } = useParams();
 
-  const rxState = useSelector(getUserState);
+  const {
+    isLoading,
+    data: fetchData,
+    isSuccess,
+  } = useQuery("getUserByID", async () => {
+    return await userAPI.getByID(id);
+  });
 
-  const rxStateLocale = useSelector(getLanguage);
+  // const mutation = useMutation(async (body) => {
+  //   return await userAPI.editUser(body.id, body.values);
+  // });
 
-  const rxDispatch = useDispatch();
+  const history = useHistory();
 
-  const initialValues = find(rxState.listUser, { userId: id });
-
-  const openNotificationWithIcon = () => {
+  const openNotifacationSuccess = () => {
     notification["success"]({
       message: "Saved!",
     });
   };
+  const onEdit = async (values) => {
+    await userAPI.editUser(id, values);
+    openNotifacationSuccess();
 
-  const onEdit = (values) => {
-    // console.log(values);
-
-    values.userId = id;
-    rxDispatch(rxAction.updateUser(values));
-    openNotificationWithIcon();
+    // setInitialValues(values);
+    // await mutation.mutateAsync({ id, values });
+    // openNotifacationSuccess();
   };
+
+  const t = useSelector(getLanguage);
 
   return (
     <>
-      {/* ========================================For PC======================================== */}
-
       <div className={styles.UpdateUser}>
         <Row justify="center">
           <Col xs={23} md={23} lg={18} className={styles.mainColContent}>
             <div className={styles.mainUpdateUser_title}>
-              <h1>
-                {
-                  rxStateLocale.locale[rxStateLocale.currentLocale].messages
-                    .compo_update_user
-                }
-              </h1>
+              <h1>{t.locale[t.currentLocale].messages.compo_update_user}</h1>
             </div>
             <div className={styles.mainUpdateUser_content}>
-              <Form onFinish={onEdit} initialValues={initialValues} />
+              <Spin spinning={isLoading}>
+                <Form onFinish={onEdit} initialValues={fetchData?.data} />
+              </Spin>
             </div>
           </Col>
         </Row>

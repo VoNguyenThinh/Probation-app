@@ -8,10 +8,22 @@ import { Provider } from "react-redux";
 import { store } from "./store/ReduxStore";
 // ============================================================================ConfigRedux===================================================================
 
+import { QueryClient, QueryClientProvider } from "react-query";
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnMount: true,
+    },
+  },
+});
+
 ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
+  <QueryClientProvider client={queryClient}>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </QueryClientProvider>,
   document.getElementById("root")
 );
 

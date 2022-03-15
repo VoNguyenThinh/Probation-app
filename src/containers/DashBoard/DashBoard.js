@@ -9,7 +9,6 @@ import {
   SettingOutlined,
   SwapOutlined,
 } from "@ant-design/icons";
-
 import { Link } from "react-router-dom";
 
 import { getLanguage } from "../../store/ReduxStore/Slice/TranlationsSlice";
@@ -21,17 +20,22 @@ const { Header, Content, Footer, Sider } = Layout;
 
 function DashBoard({ children }) {
   const rxState = useSelector(getLanguage);
+
   const rxDispatch = useDispatch();
+
   const changeLocale = (value) => {
     const locale = value ? "vn" : "en";
     rxDispatch(rxAction.changeLocale(locale));
   };
+
+  const history = useHistory();
 
   const menu = (
     <Menu>
       <Menu.Item
         onClick={() => {
           localStorage.clear();
+          history.push("/");
         }}
         key="1"
         icon={<UserOutlined />}
@@ -46,6 +50,7 @@ function DashBoard({ children }) {
       <Menu.Item
         onClick={() => {
           localStorage.clear();
+          history.push("/");
         }}
         key="1"
         icon={<UserOutlined />}

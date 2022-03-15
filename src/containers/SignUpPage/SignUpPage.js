@@ -13,7 +13,7 @@ import UserForm from "../../components/UltilsForm/UserForm";
 function SignUpPage(props) {
   const rxDispath = useDispatch();
 
-  const rxState = useSelector(getLanguage);
+  const t = useSelector(getLanguage);
 
   const history = useHistory();
 
@@ -49,7 +49,7 @@ function SignUpPage(props) {
                 className={styles.leftImage}
                 align="middle"
               >
-                <h1>{rxState.locale[rxState.currentLocale].messages.signUp}</h1>
+                <h1>{t.locale[t.currentLocale].messages.signUp}</h1>
               </Col>
               <Col
                 xs={24}

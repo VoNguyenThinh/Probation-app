@@ -1,37 +1,50 @@
-import React from "react";
-
-import { Table, Row, Col, Button, Popconfirm, Space } from "antd";
+import { useEffect, useState } from "react";
+import { Table, Row, Col, Button, Popconfirm, Space, Spin } from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import styles from "./Table.module.scss";
 
-import { useSelector, useDispatch } from "react-redux";
-import { getUserState } from "../../../store/ReduxStore/Slice/UserSlice";
+import { useSelector } from "react-redux";
 import { getLanguage } from "../../../store/ReduxStore/Slice/TranlationsSlice";
-import * as rxAction from "../../../store/ReduxStore/Slice/UserSlice";
 import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
+import userAPI from "../../../Api/userAPI/userAPI";
 
 import { filter } from "lodash";
+import { useQuery } from "react-query";
 
 function TableContent(props) {
-  const rxState = useSelector(getUserState);
+  const [data, setData] = useState([]);
 
-  const rxStateLocale = useSelector(getLanguage);
+  const { isLoading, data: fetchData } = useQuery("getAll", async () => {
+    return await userAPI.getAll();
+  });
 
-  const data = rxState.listUser;
+  useEffect(() => {
+    setData(fetchData?.data);
+  }, [fetchData]);
 
-  const rxDispatch = useDispatch();
-
-  const handleDelete = (key) => {
-    rxDispatch(rxAction.deleteUser(key.userId));
+  const handleDelete = async (record) => {
+    try {
+      await userAPI.deleteUser(record.id);
+      setData(data.filter((item) => item.id !== record.id));
+    } catch (error) {
+      console.log("Failed to delete: ", error);
+    }
   };
+
+  const t = useSelector(getLanguage);
+
+  const localeState = t.locale[t.currentLocale].messages;
+
+  const size = useBreakpoint();
+
+  const breakPoint = filter(Object.values(size), (i) => {
+    return i === true;
+  }).length;
 
   const columns = [
     {
-      title: `${
-        rxStateLocale.locale[rxStateLocale.currentLocale].messages
-          .compo_table_col_name
-      }`,
+      title: `${localeState.compo_table_col_name}`,
       dataIndex: "lastName",
       key: "lastName",
     },
@@ -41,31 +54,20 @@ function TableContent(props) {
       key: "email",
     },
     {
-      title: `${
-        rxStateLocale.locale[rxStateLocale.currentLocale].messages
-          .compo_table_col_phone
-      }`,
+      title: `${localeState.compo_table_col_phone}`,
       dataIndex: "phone",
       key: "phone",
     },
     {
-      title: `${
-        rxStateLocale.locale[rxStateLocale.currentLocale].messages
-          .compo_table_col_gender
-      }`,
+      title: `${localeState.compo_table_col_gender}`,
       dataIndex: "gender",
       key: "gender",
-      render: (text) => {
-        return rxStateLocale.locale[rxStateLocale.currentLocale].messages[
-          `form_select_${text.toLowerCase()}`
-        ];
-      },
+      // render: (text) => {
+      //   return localeState[`form_select_${text.toLowerCase()}`];
+      // },
     },
     {
-      title: `${
-        rxStateLocale.locale[rxStateLocale.currentLocale].messages
-          .compo_table_col_action
-      }`,
+      title: `${localeState.compo_table_col_action}`,
       width: "20%",
       align: "center",
       key: "action",
@@ -73,38 +75,23 @@ function TableContent(props) {
         return (
           <>
             <Space>
-              <Link to={`/view-detail/${record.userId}`}>
+              <Link to={`/view-detail/${record.id}`}>
                 <Button icon={<EditOutlined />} type="primary">
-                  {
-                    rxStateLocale.locale[rxStateLocale.currentLocale].messages
-                      .compo_table_btn_edit
-                  }
+                  {localeState.compo_table_btn_edit}
                   &nbsp; &nbsp;
                 </Button>
               </Link>
 
               <Popconfirm
-                title={
-                  rxStateLocale.locale[rxStateLocale.currentLocale].messages
-                    .db_confirm_delete
-                }
+                title={localeState.db_confirm_delete}
                 onConfirm={() => {
                   handleDelete(record);
                 }}
-                okText={
-                  rxStateLocale.locale[rxStateLocale.currentLocale].messages
-                    .db_confirm_delete_okText
-                }
-                cancelText={
-                  rxStateLocale.locale[rxStateLocale.currentLocale].messages
-                    .db_confirm_delete_cancelText
-                }
+                okText={localeState.db_confirm_delete_okText}
+                cancelText={localeState.db_confirm_delete_cancelText}
               >
                 <Button icon={<DeleteOutlined />} type="danger">
-                  {
-                    rxStateLocale.locale[rxStateLocale.currentLocale].messages
-                      .compo_table_btn_delete
-                  }
+                  {localeState.compo_table_btn_delete}
                 </Button>
               </Popconfirm>
             </Space>
@@ -114,34 +101,25 @@ function TableContent(props) {
     },
   ];
 
-  const size = useBreakpoint();
-
-  const breakPoint = filter(Object.values(size), (i) => {
-    return i === true;
-  }).length;
-
   return (
     <>
       <Row justify="center" className={styles.TableContent_PC}>
         <Col md={23} lg={24} className={styles.mainColContent}>
           <div className={styles.mainTable_title}>
-            <h1>
-              {
-                rxStateLocale.locale[rxStateLocale.currentLocale].messages
-                  .compo_table_listUser
-              }
-            </h1>
+            <h1>{localeState.compo_table_listUser}</h1>
           </div>
           <div className={styles.mainTableContent}>
             <div className={styles.tableContentReposive}>
-              <Table
-                columns={columns}
-                dataSource={data}
-                pagination={false}
-                bordered
-                size={breakPoint === 1 ? "small" : "middle"}
-                rowKey={"userId"}
-              />
+              <Spin size="large" tip="Please wait" spinning={isLoading}>
+                <Table
+                  columns={columns}
+                  dataSource={data}
+                  pagination={false}
+                  bordered
+                  size={breakPoint === 1 ? "small" : "middle"}
+                  rowKey={"userId"}
+                />
+              </Spin>
             </div>
           </div>
         </Col>

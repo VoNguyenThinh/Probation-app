@@ -7,7 +7,6 @@ const store = configureStore({
   reducer: {
     mainSlice: mainReducer,
     userSlice: userRducer,
-    userSlice: userRducer,
     TranlateSlice: TranlateReducer,
   },
 });

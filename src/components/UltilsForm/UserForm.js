@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Row, Col, Form, Input, Select, Button } from "antd";
 import styles from "./UserFormStyle.module.scss";
 
@@ -11,18 +11,20 @@ function UserForm(props) {
 
   const [form] = Form.useForm();
 
-  initialValues &&
-    form.setFieldsValue({
-      firstName: initialValues.firstName,
-      lastName: initialValues.lastName,
-      email: initialValues.email,
-      gender: initialValues.gender,
-      address: initialValues.address,
-      password: initialValues.password,
-      bio: initialValues.bio,
-      firstName: initialValues.firstName,
-      phone: initialValues.phone,
-    });
+  useEffect(() => {
+    initialValues &&
+      form.setFieldsValue({
+        firstName: initialValues.firstName,
+        lastName: initialValues.lastName,
+        email: initialValues.email,
+        gender: initialValues.gender,
+        address: initialValues.address,
+        password: initialValues.password,
+        bio: initialValues.bio,
+        firstName: initialValues.firstName,
+        phone: initialValues.phone,
+      });
+  }, []);
 
   const onFinished = (values) => {
     onFinish && onFinish(values);

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Table, Row, Col, Button, Popconfirm, Space, Spin } from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
@@ -9,27 +9,39 @@ import { getLanguage } from "../../../store/ReduxStore/Slice/TranlationsSlice";
 import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
 import userAPI from "../../../Api/userAPI/userAPI";
 
-import { filter } from "lodash";
-import { useQuery } from "react-query";
+import { filter, remove } from "lodash";
+import { useMutation, useQuery } from "react-query";
+import Item from "antd/lib/list/Item";
 
 function TableContent(props) {
   const [data, setData] = useState([]);
 
-  const { isLoading, data: fetchData } = useQuery("getAll", async () => {
-    return await userAPI.getAll();
-  });
+  const { isLoading, data: fetchData } = useQuery(
+    "getAll",
+    async () => {
+      return await userAPI.getAll();
+    },
+    {
+      refetchOnWindowFocus: true,
+    }
+  );
 
-  useEffect(() => {
-    setData(fetchData?.data);
-  }, [fetchData]);
+  const { mutate, isLoading: isDeleting } = useMutation(
+    "deleteUser",
+    (body) => {
+      return userAPI.deleteUser(body.id);
+    },
+    {
+      onSuccess: (data) => {
+        fetchData.data = fetchData.data.filter(
+          (item) => item.id !== data.data.id
+        );
+      },
+    }
+  );
 
   const handleDelete = async (record) => {
-    try {
-      await userAPI.deleteUser(record.id);
-      setData(data.filter((item) => item.id !== record.id));
-    } catch (error) {
-      console.log("Failed to delete: ", error);
-    }
+    mutate({ id: record.id });
   };
 
   const t = useSelector(getLanguage);
@@ -62,9 +74,9 @@ function TableContent(props) {
       title: `${localeState.compo_table_col_gender}`,
       dataIndex: "gender",
       key: "gender",
-      // render: (text) => {
-      //   return localeState[`form_select_${text.toLowerCase()}`];
-      // },
+      render: (text) => {
+        return localeState[`form_select_${text.toLowerCase()}`];
+      },
     },
     {
       title: `${localeState.compo_table_col_action}`,
@@ -110,15 +122,25 @@ function TableContent(props) {
           </div>
           <div className={styles.mainTableContent}>
             <div className={styles.tableContentReposive}>
-              <Spin size="large" tip="Please wait" spinning={isLoading}>
-                <Table
-                  columns={columns}
-                  dataSource={data}
-                  pagination={false}
-                  bordered
-                  size={breakPoint === 1 ? "small" : "middle"}
-                  rowKey={"userId"}
-                />
+              <Spin
+                spinning={isDeleting}
+                size="large"
+                tip={"Deleting...Please wait"}
+              >
+                <Spin
+                  size="large"
+                  tip="Loading...Please wait"
+                  spinning={isLoading}
+                >
+                  <Table
+                    columns={columns}
+                    dataSource={fetchData?.data}
+                    pagination={false}
+                    bordered
+                    size={breakPoint === 1 ? "small" : "middle"}
+                    rowKey={"userId"}
+                  />
+                </Spin>
               </Spin>
             </div>
           </div>

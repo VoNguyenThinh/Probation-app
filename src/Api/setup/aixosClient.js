@@ -2,7 +2,7 @@ import axios from "axios";
 import queryString from "query-string";
 
 const axiosClient = axios.create({
-  baseURL: "https://622fef20f113bfceed447a89.mockapi.io",
+  baseURL: "https://622fef20f113bfceed447a89.mockapi.io/",
   headers: {
     "content-type": "application/json",
   },

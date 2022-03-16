@@ -1,13 +1,14 @@
 import React from "react";
 import styles from "./CreateUserStyle.module.scss";
 import Form from "../../../components/UltilsForm/UserForm";
-import { Row, Col, notification } from "antd";
+import { Row, Col, notification, Spin } from "antd";
 
 import { useSelector } from "react-redux";
 import { getLanguage } from "../../../store/ReduxStore/Slice/TranlationsSlice";
 
 import userAPI from "../../../Api/userAPI/userAPI";
 import { useHistory } from "react-router-dom";
+import { useMutation } from "react-query";
 
 function CreateUser(props) {
   const t = useSelector(getLanguage);
@@ -20,16 +21,22 @@ function CreateUser(props) {
     });
   };
 
+  const mutation = useMutation(
+    "createUSer",
+    (body) => {
+      return userAPI.createUser(body);
+    },
+    {
+      onSuccess: () => {
+        history.push("/dash-board");
+      },
+    }
+  );
+
   const createUser = async (values) => {
     try {
-      await userAPI.createUser(values);
-      openNotificationSuccess();
-      setTimeout(() => {
-        history.push("/dash-board");
-      }, 1500);
-    } catch (error) {
-      console.log(error);
-    }
+      await mutation.mutateAsync(values);
+    } catch (error) {}
   };
 
   return (
@@ -41,7 +48,9 @@ function CreateUser(props) {
               <h1>{t.locale[t.currentLocale].messages.compo_create_user}</h1>
             </div>
             <div className={styles.mainCreateUser_content}>
-              <Form onFinish={createUser} />
+              <Spin size="large" spinning={mutation.isLoading}>
+                <Form onFinish={createUser} />
+              </Spin>
             </div>
           </Col>
         </Row>

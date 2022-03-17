@@ -9,14 +9,17 @@ import { getLanguage } from "../../../store/ReduxStore/Slice/TranlationsSlice";
 import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
 import userAPI from "../../../Api/userAPI/userAPI";
 
-import { filter, remove } from "lodash";
+import { filter } from "lodash";
 import { useMutation, useQuery } from "react-query";
 import Item from "antd/lib/list/Item";
 
 function TableContent(props) {
-  const [data, setData] = useState([]);
-
-  const { isLoading, data: fetchData } = useQuery(
+  const {
+    isLoading,
+    data: fetchData,
+    isFetching,
+    refetch,
+  } = useQuery(
     "getAll",
     async () => {
       return await userAPI.getAll();
@@ -26,22 +29,24 @@ function TableContent(props) {
     }
   );
 
-  const { mutate, isLoading: isDeleting } = useMutation(
+  const { mutateAsync, isLoading: isDeleting } = useMutation(
     "deleteUser",
     (body) => {
       return userAPI.deleteUser(body.id);
     },
     {
       onSuccess: (data) => {
-        fetchData.data = fetchData.data.filter(
-          (item) => item.id !== data.data.id
-        );
+        refetch();
+        // fetchData.data = fetchData.data.filter(
+        //   (item) => item.id !== data.data.id
+        // );
       },
     }
   );
 
+  console.log(isFetching);
   const handleDelete = async (record) => {
-    mutate({ id: record.id });
+    await mutateAsync({ id: record.id });
   };
 
   const t = useSelector(getLanguage);
@@ -123,14 +128,14 @@ function TableContent(props) {
           <div className={styles.mainTableContent}>
             <div className={styles.tableContentReposive}>
               <Spin
-                spinning={isDeleting}
+                spinning={false}
                 size="large"
                 tip={"Deleting...Please wait"}
               >
                 <Spin
                   size="large"
                   tip="Loading...Please wait"
-                  spinning={isLoading}
+                  spinning={isFetching}
                 >
                   <Table
                     columns={columns}

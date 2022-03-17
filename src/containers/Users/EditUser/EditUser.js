@@ -25,8 +25,7 @@ function EditUser(props) {
       return await userAPI.getByID(id);
     },
     {
-      refetchOnWindowFocus: false,
-      staleTime: 10000,
+      refetchOnWindowFocus: true,
     }
   );
 

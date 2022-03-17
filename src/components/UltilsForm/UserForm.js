@@ -24,7 +24,7 @@ function UserForm(props) {
         firstName: initialValues.firstName,
         phone: initialValues.phone,
       });
-  }, []);
+  }, [initialValues]);
 
   const onFinished = (values) => {
     onFinish && onFinish(values);

@@ -15,17 +15,25 @@ import { useQuery, useMutation, useQueryClient } from "react-query";
 function EditUser(props) {
   const queryClient = useQueryClient();
 
-  const [initialValues, setInitialValues] = useState({});
-
   const { id } = useParams();
 
   const { isLoading, data: fetchData } = useQuery(
-    "getUserByID",
+    ["getUserByID", id],
     async () => {
       return await userAPI.getByID(id);
     },
     {
       refetchOnWindowFocus: true,
+      initialData: () => {
+        const hero = queryClient
+          .getQueryData("getAll")
+          ?.data?.data?.find((hero) => hero.id === id);
+        if (hero) {
+          return { data: hero };
+        } else {
+          return { data: undefined };
+        }
+      },
     }
   );
 

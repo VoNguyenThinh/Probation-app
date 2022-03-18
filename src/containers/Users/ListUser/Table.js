@@ -10,10 +10,11 @@ import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
 import userAPI from "../../../Api/userAPI/userAPI";
 
 import { filter } from "lodash";
-import { useMutation, useQuery } from "react-query";
-import Item from "antd/lib/list/Item";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 
 function TableContent(props) {
+  const queryClient = useQueryClient();
+
   const {
     isLoading,
     data: fetchData,
@@ -35,16 +36,11 @@ function TableContent(props) {
       return userAPI.deleteUser(body.id);
     },
     {
-      onSuccess: (data) => {
-        refetch();
-        // fetchData.data = fetchData.data.filter(
-        //   (item) => item.id !== data.data.id
-        // );
+      onSuccess: () => {
+        queryClient.invalidateQueries("getAll");
       },
     }
   );
-
-  console.log(isFetching);
   const handleDelete = async (record) => {
     await mutateAsync({ id: record.id });
   };
@@ -128,14 +124,14 @@ function TableContent(props) {
           <div className={styles.mainTableContent}>
             <div className={styles.tableContentReposive}>
               <Spin
-                spinning={false}
+                spinning={isFetching}
                 size="large"
                 tip={"Deleting...Please wait"}
               >
                 <Spin
                   size="large"
                   tip="Loading...Please wait"
-                  spinning={isFetching}
+                  spinning={isLoading}
                 >
                   <Table
                     columns={columns}

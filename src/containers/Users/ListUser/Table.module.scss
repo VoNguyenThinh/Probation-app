@@ -1,5 +1,7 @@
+@import "../../../Assets//mixins";
+
 // Style for Mobile
-@media only screen and (max-width: 767px) {
+@include _mixin_maxWidth("MOBILE") {
   .mainColContent {
     display: flex !important;
     flex-direction: column;
@@ -43,7 +45,7 @@
 }
 
 // For Tablet
-@media only screen and (min-width: 767px) and (max-width: 1024px) {
+@include _mixin_maxWidth("TABLET") {
   .mainColContent {
     display: flex !important;
     flex-direction: column;
@@ -86,7 +88,7 @@
 }
 
 // Style for PC
-@media only screen and (min-width: 1024px) {
+@include _mixin_maxWidth("PC") {
   .mainColContent {
     padding: 10px 30px 30px 30px;
     display: flex !important;
